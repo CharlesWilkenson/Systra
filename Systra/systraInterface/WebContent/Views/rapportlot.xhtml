@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Liste Parcelles
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	 <link rel="stylesheet" type="text/css" href="../resources/css/stylerapport.css" />
+	</h:head>
+	
+
+<h:body>
+
+
+ <h3><h:outputFormat value="Rapport lot"></h:outputFormat></h3>
+
+
+
+
+
+	<b:panel look="primary" style="width:60%;margin:auto">
+	
+
+	
+	
+	<b:tabView pills="true" contentStyle="border: 1px solid #ddd;padding:10px">
+    <b:tab title="Tous les lots">
+    <b:panel look="primary">
+    <b:form>
+   
+         <b:commandButton 
+            look="primary" action="#{lotreportMB.Tousleslots()}"    value="Generer rapport"  size="md" tooltip="Modifier">
+</b:commandButton>
+</b:form></b:panel>
+    </b:tab>
+	
+	 <b:tab title="Code lot">
+	 <b:panel look="primary">
+	 <b:form>
+
+    
+  
+	  <b:inputText placeholder="Entrer le code du lot" required="true"
+	   value="#{lotreportMB.codelot}" style="padding-right:50px;" 
+	   colMd="8" labelColMd="2" >
+   		 <f:facet name="append">
+            <b:commandButton look="primary" action="#{lotreportMB.Lotparcode()}" value="Generer rapport" icon-align="right">
+       
+            </b:commandButton> 
+        </f:facet>
+        </b:inputText>
+
+</b:form></b:panel>
+    </b:tab>
+	
+	
+		 <b:tab title="Id fournisseur">
+		 <b:panel look="primary">
+		 <b:form>
+    
+  	  <b:inputText placeholder="Entrer le code du founisseur" required="true"
+	   value="#{lotreportMB.codefourn}" style="padding-right:50px;" 
+	   colMd="8" labelColMd="2" >
+   		 <f:facet name="append">
+            <b:commandButton look="primary" action="#{achatreportMB.Achatparfournisseur()}" value="Generer rapport" icon-align="right">
+       
+            </b:commandButton> 
+        </f:facet>
+        </b:inputText>
+
+
+</b:form></b:panel>
+    </b:tab>
+	
+	 <b:tab title="Date">
+	 <b:panel look="primary">
+		 <b:form>
+    
+		   <b:inputText placeholder="Entrer la date" required="true"
+	   style="padding-right:50px;" 
+	   colMd="8" labelColMd="2" >
+   		 <f:facet name="append">
+            <b:commandButton look="primary"  value="Generer rapport" icon-align="right">
+       
+            </b:commandButton> 
+        </f:facet>
+        </b:inputText>
+        </b:form>
+        </b:panel>
+        </b:tab>
+ </b:tabView>
+	
+</b:panel> 
+	</h:body>
+</ui:define>
+	</ui:composition>

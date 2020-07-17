@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboardsTest.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Facebook Style Notification Popup CSS Demo 9lessons.info</title>
+
+ <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+<link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+
+    
+</head>
+
+<h:body>
+  <h3><h:outputText   value="Nouveau fournisseur"/></h3>
+
+<!-- <h2>Nouveau fournisseur</h2> -->
+      <b:panel title="Fournisseur" look="primary" style="width:80%;margin:auto">
+<b:form  horizontal="true" id="fournForm">
+ <b:column ><b:well >
+   	<b:panelGrid columns="2">
+
+   	  <b:inputText label="ID"  placeholder="Code" name="fournID" id="fournID" value="#{fournisseurMB.fournID}"    colMd="8" labelColMd="4">
+       
+    </b:inputText>
+    
+      <b:inputText placeholder="Nom" id="nom" name="fournNom" value="#{fournisseurMB.fournNom}"  label="Nom " colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    
+    <b:inputText placeholder="Prenom" name="fournPrenom" value="#{fournisseurMB.fournPrenom}"  label="Prenom " colMd="8" labelColMd="4">
+  
+    </b:inputText>
+    <b:inputText placeholder="CIN/NIF"  name="fournNif" value="#{fournisseurMB.fournCin_nif}"  label="CIN/NIF" colMd="8" labelColMd="4">
+        
+    </b:inputText>
+    <b:inputText placeholder="Addresse" name="fournAdresse" value="#{fournisseurMB.fournAdresse}"   label="Addresse " colMd="8" labelColMd="4">
+      
+    </b:inputText>
+    <b:inputText placeholder="Telephone" name="fournTel" value="#{fournisseurMB.fournTelephone}" mask="99 99 9999"  label="Telephone" colMd="8" labelColMd="4">
+
+    </b:inputText>
+    <b:inputText placeholder="Email" name="fournEmail" value="#{fournisseurMB.fournEmail}"   label="Email" colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    <b:inputText placeholder="Usine" name="fournUsine" value="#{fournisseurMB.fournUsine}"   label="Usine" colMd="8" labelColMd="4">
+       
+    </b:inputText> 
+
+ 
+</b:panelGrid></b:well>
+  <b:commandButton icon="save" value="Enregistrer" action="#{fournisseurMB.Addfourn()}" look="primary" >   
+</b:commandButton>
+</b:column>
+<script type="text/javascript" src="../validation/valid.js"/>
+	<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+	 </b:form>
+</b:panel>
+
+
+	<script type="text/javascript" src="../validation/valid.js"/>
+	<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+	
+</h:body>
+
+
+
+</ui:define></ui:composition>

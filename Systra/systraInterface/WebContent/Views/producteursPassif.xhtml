@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+	<title>
+Lister Producteurs
+</title>
+	 <link rel="icon" type="image/png" href="../images/logosys.png" />
+<!-- 	 	<link rel="stylesheet" type="text/css" href="../resources/css/style2.css" /> -->
+	  <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+	<style type="text/css">
+	
+	
+h2 {
+	color:gray;
+	font-family: 'Patua One', cursive;
+	text-align: center;
+	font-size: 40px;
+	margin: 10px 0 0;
+	padding: 0;
+    border-radius: 50%;
+}
+
+
+	</style>
+	</h:head>
+	
+
+	<h:body>	
+<b:panel >
+    	<f:facet name="heading">
+<h:outputLabel value="Liste des producteurs passifs" />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{producteurMB.getAllProducteurPassif().size()}" />
+ <b:badge rendered="#{parcelleForProdModalMB.connect.showCodeParcelle=='yes'}" style="margin-left:350px; background-color:#5cb85c" value="Code Parcelle : #{parcelleForProdModalMB.parcId}" />
+   	
+     <b:badge rendered="#{parcelleMB.connect.showCodeProd=='yes'}" style="margin-left:350px; background-color:#5cb85c" value="Code Producteur  #{parcelleMB.prodId}" />
+   	 
+ </f:facet>
+ 
+	<h:form >
+	   
+	   <b:column span="3">
+	        <b:commandButton value="Nouveau Producteur" look="primary" action="#{parcelleMB.redirectTo()}" size="sm"/>	  	  
+	    </b:column>
+  
+  <b:column span="12">
+			<b:dataTable id="table_fourn"  value="#{producteurMB.getAllProducteurPassif()}" var="prod" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+			   <b:dataTableColumn value="#{prod.producteurId}" label="ID Producteur" />
+			   <b:dataTableColumn value="#{prod.producteurNomComplet}" label="Nom Complet"/>
+			   <b:dataTableColumn value="#{prod.producteurSexe}" label="Sexe"/>
+			   <b:dataTableColumn value="#{prod.producteurTelephone}" label="Telephone"/>
+			   <b:dataTableColumn  label="Action"  update="listparcelle"  >
+			   
+			   <h:commandLink action="#{producteurMB.editer()}"
+		style="margin-left:7px">
+			   <f:param name="idproducteur" value="#{prod.producteurId}"></f:param>
+			   <b:iconAwesome name="fa-edit" style="border-radius:3px;" size="2x"></b:iconAwesome>
+               </h:commandLink>
+      		
+      		  <h:commandLink  action="#{producteurMB.addparc2()}"  
+      	style="margin-left:7px">
+      		  <b:iconAwesome name="fa-plus" style="border-radius:3px;" size="2x"></b:iconAwesome>      		  
+			   <f:param name="idproducteur" value="#{prod.producteurId}"></f:param>
+              </h:commandLink>
+      		
+      		  <b:commandLink  oncomplete="$('.modaleListparcelleByPro').modal();return false;" 
+      		 style="margin-left:7px">
+ 			     <b:iconAwesome name="fa-search" style="border-radius:3px;" size="2x"></b:iconAwesome>
+                <f:param name="idproducteur" value="#{prod.producteurId}"></f:param>
+               <f:ajax execute="@form" render="listparcelle" listener="#{producteurMB.showModalParcelleByPro()}" />
+               </b:commandLink>
+      		 </b:dataTableColumn>
+			</b:dataTable>
+			</b:column>
+			</h:form>
+			</b:panel>
+			
+			
+			<!-- Modal add a productor -->
+			
+
+
+<!-- Dialog modify Productor -->
+	<b:form id="formeditprod" horizontal="true">
+   	<b:modal id="editProd" modal="true" widgetVar="modaleditprod" title="Modifier Producteur"  >
+      
+      <b:panel >
+        <f:facet name="heading">  
+      <b:badge style="margin-left:10px; background-color:#5cb85c" value="Ce Producteur a #{producteurMB.listparcbypro().size()} parcelle" />
+   	</f:facet>
+    
+    <b:inputText  placeholder="ID Producteur" value="#{producteurMB.idprod}"  label="ID " colMd="10" labelColMd="2" >
+        <f:facet name="prepend">
+            <b:iconAwesome name="fa-key" />
+        </f:facet>
+    </b:inputText>
+ 
+    <b:inputText placeholder="Nom Complet" value="#{producteurMB.prodNomComplet}"  label="Nom complet" colMd="10" labelColMd="2">
+        <f:facet name="prepend">
+            <b:iconAwesome name="user" />
+        </f:facet>
+    </b:inputText>
+    <b:selectOneMenu label="Sexe" value="#{producteurMB.prodSexe}" colMd="10" labelColMd="2">
+                <f:facet name="prepend">
+                    <b:iconAwesome name="fa-male" />
+                </f:facet>
+               <f:selectItem itemLabel="Masculin" itemValue="Masculin"/>
+                 <f:selectItem itemLabel="Feminin" itemValue="Feminin"/>
+            </b:selectOneMenu>
+            <b:inputText placeholder="Telephone" value="#{producteurMB.prodTelephone}" label="Telephone" colMd="10" labelColMd="2" mask="9999-9999">
+        <f:facet name="prepend">
+            <b:iconAwesome name="phone" />
+        </f:facet>
+    	</b:inputText> 
+ 		<f:facet name="footer">
+    	<b:commandButton   value="Modifier" action="#{producteurMB.Modifierprod()}" look="primary">
+    	</b:commandButton>
+    	 
+    </f:facet>
+    </b:panel>
+	</b:modal>
+	</b:form>
+	
+<b:form id="listparcelle">
+<b:modal id="listparcelleByPro" close-on-escape="true" backdrop="false" styleClass="modaleListparcelleByPro"  title="Liste Parcelle"   size="modal-lg">
+   <b:panel id="formparc">
+    	<f:facet name="heading">
+     <b:badge rendered="#{producteurMB.listparcbyprod().size()==1}" style="margin-left:10px; background-color:#5cb85c" value="#{producteurMB.prodNomComplet} detient #{producteurMB.listparcbyprod().size()} parcelle" />
+     <b:badge rendered="#{producteurMB.listparcbyprod().size()>1}" style="margin-left:10px; background-color:#5cb85c" value="#{producteurMB.prodNomComplet} detient #{producteurMB.listparcbyprod().size()} parcelles" />
+ 
+ </f:facet>
+	  <b:column span="12">
+			<b:dataTable id="table_fourn" value="#{producteurMB.listparcbyprod()}" var="par" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+               <b:dataTableColumn value="#{par.parcelleId}" label="ID Parcelle" />
+			  <b:dataTableColumn value="#{par.parcelleCommune}" label="Commune"/>
+			   <b:dataTableColumn value="#{par.parcelleSectioncommunale}" label="Section C."/>
+			   <b:dataTableColumn value="#{par.parcelleRegimeFoncier}" label="Regime"/>
+			   <b:dataTableColumn value="#{par.parcelleTypeCulture}" label="Type Culture"/>
+			   <b:dataTableColumn label="Action">
+			   <b:commandButton value="Details" size="md"  oncomplete="$('.info').modal();return false;">
+                                                  
+<b:iconAwesome name="fa-search"  size="2x"></b:iconAwesome>
+<f:param name="idparcelle" value="#{par.parcelleId}"></f:param> 
+ <f:ajax execute="@form"  render="modalparcelle" listener="#{parcelleMB.searchparcelle()}" />
+</b:commandButton>			   
+			   </b:dataTableColumn>
+			   
+			   
+			</b:dataTable>
+			
+			</b:column>
+			</b:panel>
+
+			</b:modal>
+	</b:form>		
+		
+
+
+		<b:form id="modalparcelle" horizontal="true">	
+	
+			<b:modal id="amodalViewUser" close-on-escape="true" backdrop="false" size="modal-lg" title="Toutes les informations concernant cette parcelle"  styleClass="info" >
+<b:tabView pills="true" tabPosition="top" contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-top: 1px solid #ddd;padding:10px">
+    <b:tab title="Identification">
+
+<b:panel style="size:200px" look="primary" >
+              
+              <f:facet name="heading">
+     <i style="padding-right:20px" /> <div class="text">Identification</div>
+	</f:facet>
+           <b:column >
+            <b:progressBar  renderCaption="false" animated="false" value="20"  min="0" max="100" tooltip="Identification" severity="info" visible="md..." >
+            </b:progressBar>
+ 
+           <b:well >
+<b:panelGrid columns="2">
+			
+			
+    			
+				<b:inputText colMd="8" labelColMd="4" label="Nom complet"  placeholder="Nom " name="nom" id="nom"  required-message="Champ null" value="#{parcelleMB.parcnomprod}" >
+    	</b:inputText> 
+	           	   
+	  	 	<b:inputText colMd="8" labelColMd="4" value="#{parcelleMB.prodSexe}" label="Sexe"  >
+    	</b:inputText> 
+                 
+         
+ 
+            
+       
+            <b:inputText label="Telephone" colMd="8" labelColMd="4" placeholder="Telephone"  id="tel" name="tel" value="#{parcelleMB.prodTelephone}"   mask="9999-9999">
+       
+    	</b:inputText>      
+	           	 
+	           	 
+	           	 <b:inputText label="Code MARNDR" placeholder="Code MARNDR" colMd="8" labelColMd="4" value="#{parcelleMB.parcMarndr}"  >
+    			</b:inputText> 
+    			
+    			
+     </b:panelGrid></b:well></b:column></b:panel>
+ 
+</b:tab>
+
+  <b:tab title="Localisation">
+<b:panel style="size:200px" look="primary">
+			         <f:facet name="heading">
+     <i style="padding-right:20px" /><div class="text">Localisation</div>
+	</f:facet>
+					<b:column >
+		
+	                 <b:progressBar  renderCaption="false" animated="false" value="40" min="0" max="100" tooltip="Localisation" severity="info" visible="md..." />
+ 
+	                 <b:well >
+                     <b:panelGrid columns="2">
+		               	
+
+        
+                             <b:inputText colMd="8" labelColMd="4" class="form-control" label="Superficie" mask="decimal" placeholder="Superficie" name="superficie" value="#{parcelleMB.parcSuperficie}" >
+    			</b:inputText>
+				   
+			
+	  		    
+				    
+						    <b:inputText colMd="8" labelColMd="4" label="Commune" value="#{parcelleMB.parcCommune}" >
+    			</b:inputText>
+									
+	           	 <b:inputText label="Latitude1" colMd="8" labelColMd="4" placeholder="Latitude 1" name="lat1" mask="decimal" value="#{parcelleMB.parcPointLatitude1}"  >
+	           	</b:inputText>
+    			 	
+	
+    			 
+    				 	 <b:inputText colMd="8" labelColMd="4" label="Section Comm." class="form-control"  id="localite" name="sectionCom" value="#{parcelleMB.parcSectioncommunale}"  >
+	           	</b:inputText>
+    									
+	           	 <b:inputText colMd="8" labelColMd="4" label="Longitude 1" placeholder="Longitude 1" name="long1" mask="decimal" value="#{parcelleMB.parcPointLongitude1}" >
+    			</b:inputText>
+						
+		
+	           	 <b:inputText colMd="8" labelColMd="4" class="form-control" label="Localite" placeholder="Localite" name="localite" value="#{parcelleMB.parcLocalite}" >
+    			</b:inputText>
+							
+								</b:panelGrid></b:well></b:column></b:panel>
+  
+</b:tab>
+
+  <b:tab title="Preparation">
+ <b:panel style="size:200px" look="primary">
+          <f:facet name="heading">
+     <i style="padding-right:20px" />  <div class="text">Preparation</div>
+	</f:facet>
+						        <b:column >
+						        <b:progressBar renderCaption="false" animated="false" value="60" min="0" max="100" tooltip="Preparation" severity="info" visible="md..." />
+ 
+						        <b:well >
+                     <b:panelGrid columns="2">
+							     		
+         
+            
+          <b:inputText value="#{parcelleMB.parcRegimeFoncier}" colMd="8" labelColMd="4" label="Regime Foncier" >
+    	</b:inputText> 
+          
+
+            
+             <b:inputText value="#{parcelleMB.parcTypeCulture}" colMd="8" labelColMd="4" label="Type culture">
+    	</b:inputText>
+                   
+  
+            
+               <b:inputText value="#{parcelleMB.parcFertilisationChimique}" colMd="8" labelColMd="4" label="Fertilisation chimique">
+    	</b:inputText>
+            
+   
+            
+             <b:inputText id="ferto" value="#{parcelleMB.parcFertilisationOrganique}" colMd="8" labelColMd="4" label="fertilisation organique">
+    	</b:inputText>
+          
+         
+            
+                <b:inputText id="parcir" value="#{parcelleMB.parcParcIrrigue}" colMd="8" labelColMd="4" label="Parcelle irriguee">
+    	</b:inputText>
+          
+  
+            
+              <b:inputText id="typeau" value="#{parcelleMB.parcTypeEau}" label="Type d'eau" colMd="8" labelColMd="4">
+    	</b:inputText>
+              </b:panelGrid>
+		         </b:well> </b:column>  
+          </b:panel>
+
+
+</b:tab>
+
+  <b:tab title="Risque">
+	<b:panel  style="size:200px" look="primary">
+				         <f:facet name="heading">
+     <i style="padding-right:20px" /><div class="text">Risque</div>
+	</f:facet>
+        	<b:column>
+        	<b:progressBar renderCaption="false" animated="false" value="80" min="0" max="100" tooltip="Risque" severity="info" visible="md..." />
+ 
+        	<b:well >
+		    <b:panelGrid columns="2" >
+		             
+				                 <b:inputText value="#{parcelleMB.parcPresenceElevage}" label="Presence evlevage" colMd="8" labelColMd="4">
+    	                         </b:inputText>
+
+				     
+						 <b:inputText label="Type elevage" colMd="8" labelColMd="4" value="#{parcelleMB.parcTypeElevage}">
+    	                         </b:inputText>
+			
+				       
+				        <b:inputText colMd="8" labelColMd="4" label="Presence latrine"  value="#{parcelleMB.parcPresenceLatrine}">
+    	                         </b:inputText>
+								
+				    
+				           
+				            <b:inputText label="Plante haute" colMd="8" labelColMd="4" class="form-control"  value="#{parcelleMB.parcPlanteHote}">
+    	                         </b:inputText>
+			  
+				
+				         
+				             <b:inputText label="Traitement phytosanitaire" colMd="8" labelColMd="4"  value="#{parcelleMB.parcTypeTraitrementPhytosanitaire}">
+    	                         </b:inputText>
+				            
+				           
+				       <b:inputText label="Probleme inondation" colMd="8" labelColMd="4" value="#{parcelleMB.parcProblemeInondation}">
+    	                         </b:inputText>
+				            
+				         
+				            
+				             <b:inputText label="Frequence innondation" colMd="8" labelColMd="4"  value="#{parcelleMB.parcFrequenceInondation}" >
+    	                         </b:inputText>
+				            </b:panelGrid>
+				         </b:well> </b:column>
+				          </b:panel>
+  
+</b:tab>
+
+  <b:tab title="Production">
+ <b:panel  style="size:200px" look="primary">
+ 			         <f:facet name="heading">
+     <i style="padding-right:20px" /><div class="text">Production</div>
+	</f:facet>
+        	<b:column>
+        	<b:progressBar renderCaption="false" animated="false" value="100" min="0" max="100" tooltip="Production" severity="info" visible="md..." />
+ 
+        	<b:well >
+        	<b:panelGrid columns="2" >
+		              
+			           	 <b:inputText label="Age plantation" class="form-control" colMd="8" labelColMd="4" name="agePlant" placeholder="Age plantation" mask="integer" value="#{parcelleMB.parcAgePlantation}" >
+			           	</b:inputText>
+   			
+   			
+								
+			           	 <b:inputText label="Manguier sur la parcelle" class="form-control" colMd="8" labelColMd="4" name="manguierSP" placeholder="Manguier sur la parcelle" mask="integer" value="#{parcelleMB.parcNbreManguier}"  >
+			           	</b:inputText>
+				   
+			           	 <b:inputText label="Manguier en Production" class="form-control"  name="manguierEP" colMd="8" labelColMd="4" placeholder="Manguier en Production" mask="integer" value="#{parcelleMB.parcNbreManguierEnProduction}"  >
+			           	</b:inputText>
+				    
+				        
+				       
+			           	 <b:inputText class="form-control" label="Production annuelle" name="productionAn" colMd="8" labelColMd="4"  placeholder="Production annuelle" mask="integer" value="#{parcelleMB.parcProductionAnnuelleMangue}"  >
+			           </b:inputText>
+			       
+		
+           <b:inputText colMd="8" labelColMd="4" label="Commercialisation" class="form-control" id="comm" value="#{parcelleMB.parcCommercialisation}" >
+    	                         </b:inputText>
+            </b:panelGrid>
+            
+           </b:well> 
+           
+           </b:column>
+     
+            </b:panel>
+  
+</b:tab>
+</b:tabView>
+
+
+</b:modal>
+
+</b:form>	
+		
+
+ </h:body>
+ 
+   
+</ui:define>
+</ui:composition>
+	

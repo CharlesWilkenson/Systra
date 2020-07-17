@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	
+	<title>Connexion
+	</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!--===============================================================================================-->	
+	<!-- <link rel="icon" type="image/png" href="../resources/images/icons/favicon.ico"/> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../resources/vendor/bootstrap/css/bootstrap.min.css"/>
+<!--===============================================================================================-->
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/> -->
+<!--===============================================================================================-->
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"/> -->
+<!--===============================================================================================-->
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/vendor/animate/animate.css"/> -->
+<!--===============================================================================================-->	
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/vendor/css-hamburgers/hamburgers.min.css"/> -->
+<!--===============================================================================================-->
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/vendor/animsition/css/animsition.min.css"/> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="../resources/vendor/select2/select2.min.css"/> -->
+<!--===============================================================================================-->	
+	<!-- <link rel="stylesheet" type="text/css" href="../resources/vendor/daterangepicker/daterangepicker.css"/> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../resources/css/util.css"/>
+	<link rel="stylesheet" type="text/css" href="../resources/css/main.css"/>
+<!--===============================================================================================-->
+ <link rel="icon" type="image/png" href="../images/logosys.png" />
+ <link rel="stylesheet" href="../resources/css/demo.css"/>
+	<link rel="stylesheet" href="../resources/css/footer-distributed-with-contact-form.css"/>
+<link rel="stylesheet" href="../resources/css/footer-distributed-with-address-and-phones.css"/>
+<!-- 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"/>
+ --><link rel="stylesheet" type="text/css" href="../Design/css/style.css" />
+       	  <link rel="stylesheet" type="text/css" href="../Design/css/demo.css" />
+ <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	
+		<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css"/>
+	
+	
+	 <style type="text/css">
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+
+
+.my-error-class {
+    color:#FF0000;  /* red */
+     font-size: 14px;
+    color: red;
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}
+		</style>
+</h:head>
+
+         
+        <!-- lucky 44739900 -->
+  
+	
+<h:body  id="myPage" data-spy="scroll">
+	 
+	 
+	 
+	  <div style="background-color: #999999;background-image: url(../logo/mango-tree.jpg);">
+	<div class="limiter">
+						
+		<div class="container-login100">
+		
+			<div class="wrap-login100">
+			
+				<div class="login100-form-title" style="background-image: url(../logo/logosys.png);height: 50px;">					
+					<span class="login100-form-title-1">
+						AGRITECH-SYSTRA
+					</span>
+				</div>
+				
+			<b:messages id="messages" style="height:0%"
+            globalOnly="true"
+            severity="error,fatal,info,warn" />
+           
+				<h:form id="login" class="login100-form validate-form" style="height:285px">
+					
+					<div class="form-top" style="margin-top: -30px">
+						<div class="form-top-center">		
+						</div>
+						<h:message for="message"  class="my-error-class "/>
+					 <p class="text-primary">Saisir votre email et votre mot de passe pour vous connecter</p> 
+						
+					</div>
+		
+						
+					<div  class="wrap-input100 validate-input m-b-26" data-validate="Veuillez entrer votre email">	
+						<span class="label-input100">  <span class="symbol-input100">
+						<span class="glyphicon glyphicon-envelope"></span>
+						</span></span>						
+						  <h:inputText class="input100" tabindex="1" name="username" id="username" required="true" p:placeholder="Email " value="#{connect.email}"  >           
+                </h:inputText>
+                <h:message for="username" showDetail="false" errorStyle="color:red"/>
+                <span class="focus-input100">
+                
+               
+                </span>
+               
+				</div>
+                   <!--  <img src="../logo/PadlockKey.jpg" width="70px" height="70px" style="margin-top: -50px;margin-right:-80px"/>
+					 -->	
+					<div class="wrap-input100 validate-input m-b-18" data-validate = "Veuillez entrer votre mot de passe">
+						<span class="label-input100"><span class="symbol-input100" style="margin-right:180px;">
+						<span class="glyphicon glyphicon-lock"></span>
+						</span></span>			
+						<h:inputSecret class="input100 " tabindex="2" name="pass" id="pass" p:placeholder="Mot de passe"  value="#{connect.password}" >
+                </h:inputSecret><span class="focus-input100">
+                
+                </span>
+                	
+					</div>
+
+			
+
+					<div class="container-login100-form-btn">
+					                <h:commandButton actionListener="#{connect.login()}"  class="login100-form-btn"  update="login,messages" value="Connexion"  size="lg">
+                <i class="spinner"></i>
+      </h:commandButton>
+					
+				
+					</div>
+				</h:form>
+					<div class="login100-form-title" style="height:50px;">
+					<span class="login100-form-title-1" style="height:50px;">
+					
+					</span>
+				</div> 
+			</div>
+		</div>
+	</div>
+	</div>
+	
+		<div class="limiter" style="margin-top: -100px;">
+		
+    <!--   <b:label value="Error" globalOnly="true" style="size:10px" errorStyle="color:red;" id="message"></b:label>
+	 --><!-- <b:label id="message" value="#{connect.message}" style="color:red;size:20px"></b:label>
+		 -->				
+
+		 <footer class="footer-distributed">
+
+			<div class="footer-center" style="color: rgba(93,84,240,0.5); height: 50px">
+			
+
+				<a ><h3 style="color:#57b846;margin-top: -60px">Notre adresse </h3></a>
+	<div>
+					<i class="fa fa-map-marker"></i>
+					<p>Petionville 
+					<br />
+					Port-Au-Prince, Haïti</p>
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+1 555 123456</p>
+				</div>
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="">agritechsystra01@gmail.com</a></p>
+				</div>
+				
+			</div>
+
+			<div class="footer-center" style="color: rgba(93,84,240,0.5);">
+			<a><h3 style="color:#57b846;margin-top: -60px">Ecrivez nous</h3></a>
+			<br/>
+                           <b:form id="mailForm"> 
+                 <span> <b:inputText id="mail" value="#{messageMB.mail}"  name="mail"  p:placeholder="Votre mail" /></span>
+			
+				    <span> <b:inputText  id="nomComplet" value="#{messageMB.nomComplet}"   name="nomComplet"  p:placeholder="Votre nom et prenom" /></span>
+	
+					<div >
+					<b:inputTextarea style="height:240px;width:500px;margin-left:-100px" id="message" 
+				required="true"	required-message="Ecrivez votre message pour pouvoir l'envoyer" value="#{messageMB.message}" 
+					  name="message" p:placeholder="Votre message">
+					</b:inputTextarea>
+<h:message for="message"  class="my-error-class "/>
+					</div>
+				 
+					<b:commandButton action="#{messageMB.envoyerMessage()}" value="Envoyer" ></b:commandButton>
+					
+					<a class="up-arrow" href="#myPage" style="margin-left:200px;color:#57b846;" data-toggle="tooltip" title="En haut">
+		               <span class="glyphicon glyphicon-chevron-up" ></span>
+		               </a>
+			</b:form>
+			</div>
+
+			<div class="footer-right" style="color: rgba(93,84,240,0.5);margin-left:916px;margin-top: -514px;width:30%">
+			<a><h3 style="color:#57b846;">A propos </h3></a>
+                    <p class="footer-company-about">
+					
+					AGRITECH est une entreprise oeuvrant dans le domaine d'exportation des mangues vers les USA.
+					Pour plus d'information contactez-nous  via nos differentes adresses mentionnees sur cette page.
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-google-plus"></i></a>
+			</div>
+			
+			</div>
+
+	</footer>
+	</div>
+	
+<!--===============================================================================================-->
+<!-- 	<script src="../resources/vendor/jquery/jquery-3.2.1.min.js"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="../resources/vendor/animsition/js/animsition.min.js"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="../resources/vendor/bootstrap/js/popper.js"></script>
+	<script src="../resources/vendor/bootstrap/js/bootstrap.min.js"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="../resources/vendor/select2/select2.min.js"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="../resources/vendor/daterangepicker/moment.min.js"></script>
+	<script src="../resources/vendor/daterangepicker/daterangepicker.js"></script> -->
+<!--===============================================================================================-->
+	<!-- <script src="../resources/vendor/countdowntime/countdowntime.js"></script> -->
+<!--===============================================================================================-->
+	<script src="../resources/js/main.js"></script>
+
+<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../validation/valid.js"/>
+
+</h:body>
+
+<!-- Android Agri25111992 -->
+</html>

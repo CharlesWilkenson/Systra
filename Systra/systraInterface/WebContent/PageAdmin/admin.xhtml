@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+<title>
+Administration
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	 <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	<style type="text/css">
+	h3 {
+	color:gray;
+    font-family: 'Patua One';
+	text-align: center;
+	font-size: 30px;
+	margin: auto;
+	width:30%;
+	text-align:center;	
+	 margin-top:-10px;
+}
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+	.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}	
+</style>
+	</h:head>
+	<b:messages id="messages"
+            globalOnly="true"
+            severity="error,fatal"/>
+    <b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+         
+         <h3>
+         Administration
+            </h3>
+         
+	<b:panel collapsible="false">
+   <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputText value="Admin Panel " />
+   	</f:facet>
+   	<b:tabView contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px">
+     <b:tab title="Utilisateur">
+     <f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
+     <b:panel >
+		   	<f:facet name="heading">
+		     <i style="padding-right:20px" /> <h:outputText value="Users " />
+		   	</f:facet>
+		   	<b:form id="userform">
+		        <b:commandButton value="Nouvel utilisateur" look="primary" icon-awesome="fa-user-plus" update="formuser" action="User.xhtml?faces-redirect=true"  size="Md"/>
+		        <hr/>
+		        <b:dataTable value="#{adminMB.allUsers()}" var="user" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+               <b:dataTableColumn value="#{user.utilisateurNom}" label="Nom" />
+			   <b:dataTableColumn value="#{user.utilisateurPrenom}" label="Prenom" />
+			   <b:dataTableColumn value="#{user.utilisateurTelephone}" label="Telephone" />
+			   <b:dataTableColumn value="#{user.utilisateurEmail}" label="Email"/>
+			    <b:dataTableColumn value="#{user.utilisateurFonction}" label="Role" />
+			    <b:dataTableColumn value="#{user.utilisateurAdresse}" label="Adresse" />
+			   <b:dataTableColumn  label="Action">
+       
+             <!-- Edit button --> 
+            <b:commandButton value="Editer" icon="edit" look="primary"
+            ajax="true" rendered="#{user.utilisateurEtatcompte=='Actif'}"
+            onclick="ajax:adminMB.editUser()"   
+            update="formuser"
+           	oncomplete="$('.modaluser').modal();return false;"
+                  size="sm" style="margin-right:5px">
+                <f:param name="useremail" value="#{user.utilisateurEmail}"></f:param>
+            </b:commandButton>
+            <b:commandButton rendered="#{user.utilisateurEtatcompte=='Passif'}" look="secondary" action="#{adminMB.activerUser()}"   value="Activer" size="sm">
+             <f:param name="useremail" value="#{user.utilisateurEmail}"></f:param>
+            </b:commandButton>
+            
+             <b:commandButton rendered="#{user.utilisateurEtatcompte=='Actif'}" icon="remove" look="primary" action="#{adminMB.desactiverUser()}" value="Desactiver" size="sm">
+           <f:param name="useremail" value="#{user.utilisateurEmail}"></f:param>
+            </b:commandButton>
+			   </b:dataTableColumn>
+			</b:dataTable>	   	
+		   	</b:form>
+		   	</b:panel>
+     </b:tab>
+     <b:tab title="Roles">
+     <f:facet name="anchor"><b:iconAwesome name="cog" spin="true" /></f:facet>
+     <b:panel >
+		   	<f:facet name="heading">
+		     <i style="padding-right:20px" /> <h:outputText value="Roles " />
+		   	</f:facet>
+		   	<b:form id="roleform">
+		   	 <b:column span="12">
+			<b:dataTable id="table_fourn" value="#{adminMB.listrole()}" var="item" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                 <b:dataTableColumn value="#{item.rolename}" label="Role"/>
+			</b:dataTable>
+			
+			</b:column>
+		   	</b:form>
+		   	</b:panel>
+     </b:tab>
+      <b:tab title="Trace systeme">
+		   	<b:panel >
+		   	<f:facet name="heading">
+		     <i style="padding-right:20px" /> <h:outputText value="Data Records" />
+		   	</f:facet>
+		   	<b:form id="dataform">
+		   	 <b:column span="12">
+			<b:dataTable id="table_fourn" value="#{adminMB.listtrace()}"  var="tra" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                 
+               <b:dataTableColumn value="#{tra.traceEmail}" label="Email" />
+			   <b:dataTableColumn value="#{tra.traceOperation}" label="Operation" />
+			   <b:dataTableColumn value="#{tra.traceDate}" label="Date Record."/>
+			   <b:dataTableColumn  label="Action">
+			   <b:commandButton look="primary"  icon="search" value="Voir detail" 
+			    update="viewUser"
+            ajax="true" 
+            onclick="ajax:adminMB.editUser()"   
+       	    oncomplete="$('.modalViewUser').modal();return false;"
+                  size="sm" style="margin-right:5px">
+           <f:param name="useremail" value="#{tra.traceEmail}"></f:param>
+            </b:commandButton>
+			   </b:dataTableColumn>
+			</b:dataTable>
+			
+			</b:column>
+		   	</b:form>
+		   	</b:panel>
+     </b:tab>
+      
+   
+     </b:tabView>
+		</b:panel>  
+		
+		
+	<b:form id="viewUser" horizontal="true">
+   	<b:modal id="amodalViewUser" title="Information de l'utilisateur"  styleClass="modalViewUser" >
+    <b:well >
+    <h5>Base Information</h5>
+    <b:inputText value="#{adminMB.utilisateurEmail}" placeholder="Email" required="true" label="Email" colMd="10" labelColSm="2">
+      <f:facet name="prepend">
+            <b:iconAwesome name="fa-envelope" />
+        </f:facet>
+    </b:inputText>
+    <b:inputText value="#{adminMB.utilisateurFonction}" placeholder="Fonction" required="true" label="Fonction" colMd="10" labelColSm="2"/>
+    
+    
+   <h5>Private Information</h5>
+   
+   	<b:inputText value="#{adminMB.utilisateurNom}" placeholder="Nom" required="true" label="Nom" colMd="10" labelColSm="2">
+   	 <f:facet name="prepend">
+            <b:iconAwesome name="user" />
+        </f:facet>
+   	</b:inputText>
+   
+   	<b:inputText  value="#{adminMB.utilisateurPrenom}" placeholder="Prenom" required="true" label="Prenom" colMd="10" labelColSm="2">
+   	 <f:facet name="prepend">
+            <b:iconAwesome name="user" />
+        </f:facet>
+   	</b:inputText>
+   	
+   
+   	
+   	<b:selectOneMenu value="#{adminMB.utilisateurSexe}"  label="Sexe" colMd="10" labelColSm="2"> 
+    <f:facet name="prepend">
+                    <b:iconAwesome name="fa-gender" />
+                </f:facet>
+    <f:selectItem itemLabel="Homme" itemValue="Homme" />
+    <f:selectItem  itemLabel="Femme" itemValue="Femme" />
+    </b:selectOneMenu>	
+   	
+   	<b:inputText value="#{adminMB.utilisateurTelephone}" placeholder="Telephone" required="true" label="Telephone" mask="9999-9999" colMd="10" labelColSm="2">
+   	<f:facet name="prepend">
+            <b:iconAwesome name="phone" />
+        </f:facet>
+   	</b:inputText>
+   	<b:inputText value="#{admidnMB.utilisateurAdresse}" placeholder="Adresse" required="true" label="Adresse" colMd="10" labelColSm="2">
+   	<f:facet name="prepend">
+            <b:iconAwesome name="home" />
+        </f:facet>
+   	</b:inputText>
+  </b:well>
+   	</b:modal> 
+   	</b:form>
+		
+		<b:form id="formuser" horizontal="true">
+		
+   	<b:modal id="amodal" title="Modifier utilisateur"  styleClass="modaluser" >
+    <b:well >
+    <h5>Informations de base</h5>
+    <b:inputText value="#{adminMB.utilisateurEmail}" placeholder="Email" required="true" label="Email" colMd="10" labelColSm="2">
+      <f:facet name="prepend">
+            <b:iconAwesome name="fa-envelope" />
+        </f:facet>
+    </b:inputText>
+    <b:selectOneMenu value="#{adminMB.utilisateurFonction}"  required="true" label="Fonction" colMd="10" labelColSm="2"> 
+    <f:selectItems var="item" value="#{roleMB.listerRoles()}" itemLabel="#{item.rolename}" itemValue="#{item.rolename}" />
+    </b:selectOneMenu>
+    
+   <h5>Informations privees</h5>
+    	<b:inputText value="#{adminMB.utilisateurNom}" placeholder="Nom" required="true" label="Nom" colMd="10" labelColSm="2">
+   		 <f:facet name="prepend">
+            <b:iconAwesome name="user" />
+        </f:facet>
+   	</b:inputText>
+   
+   	<b:inputText  value="#{adminMB.utilisateurPrenom}" placeholder="Prenom" required="true" label="Prenom" colMd="10" labelColSm="2">
+   		 <f:facet name="prepend">
+            <b:iconAwesome name="user" />
+        </f:facet>
+   	</b:inputText>
+  
+   	
+   		<b:selectOneMenu value="#{adminMB.utilisateurSexe}"  label="Sexe" colMd="10" labelColSm="2"> 
+    <f:facet name="prepend">
+                    <b:iconAwesome name="fa-gender" />
+                </f:facet>
+    <f:selectItem itemLabel="Homme" itemValue="Homme" />
+    <f:selectItem  itemLabel="Femme" itemValue="Femme" />
+    </b:selectOneMenu>
+   	
+   	
+   	<b:inputText value="#{adminMB.utilisateurTelephone}" placeholder="Telephone" required="true" label="Telephone" mask="9999-9999" colMd="10" labelColSm="2">
+   	  	<f:facet name="prepend">
+            <b:iconAwesome name="phone" />
+        </f:facet>
+   	</b:inputText>
+   	<b:inputText value="#{adminMB.utilisateurAdresse}" placeholder="Adresse" required="true" label="Adresse" colMd="10" labelColSm="2">
+   		<f:facet name="prepend">
+            <b:iconAwesome name="home" />
+        </f:facet>
+   	</b:inputText>
+   	
+   	<b:commandButton action="#{adminMB.updateUser()}"  value="Save"  look="primary" style="margin-right:7px"/>
+   	<b:commandButton action="#{adminMB.clearField()}" dismiss="modal"  value="Cancel" style="margin-left:5px"/>
+	
+    </b:well>
+   	</b:modal> 
+   	</b:form>
+
+   	</ui:define>
+   	</ui:composition>

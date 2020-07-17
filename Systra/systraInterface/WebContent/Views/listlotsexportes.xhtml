@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Lister Lots
+</title>
+  <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+	<b:panel>
+    	<f:facet name="heading">
+    	<img alt="hola" src="../logo/emballage.jpg" height="30" width="40"/>
+<h:outputLabel value="Liste des Lots expotés" />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{lotsMB.listallLots.size()}" />
+ </f:facet>
+   	<b:form id="form1">
+  
+	  <b:column span="12">
+			<b:dataTable  value="#{lotsMB.getLotsByEtat()}" var="lots" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+		 <b:dataTableColumn value="#{lots.lotno}" label="No Lot" />
+		    <b:dataTableColumn value="#{lots.lotid}" label="Code Lot" />
+		   <b:dataTableColumn value="#{lots.lotqttTotrecu}" label="Quantite" />
+		   <b:dataTableColumn value="#{lots.lotqttTotapc}" label="Prix"/>
+		   <b:dataTableColumn value="#{lots.lotdate_transport}" label="Date Transport"/>
+		   <b:dataTableColumn value="#{lots.lotdate_livraison}" label="Date Livraison"/>
+		   <b:dataTableColumn value="#{lots.region.regionId}  (#{lots.region.zone_id})" label="Region"/>
+		   <b:dataTableColumn value="#{lots.fournisseur.fournisseurNom} #{lots.fournisseur.fournisseurPrenom} (#{lots.fournisseur.fournisseurId})" label="Fournisseur"/>
+		   <b:dataTableColumn  label="Action">
+         	<b:commandButton value="voir plus" icon="search" look="primary"
+            		ajax="true" 
+           			 onclick="ajax:lotsMB.getinfoLot()"   
+           			 update="formlotdetails"
+           			oncomplete="$('.modallotdetails').modal();return false;"
+                  size="sm">
+                <f:param name="idlot" value="#{lots.lotid}"></f:param>
+            </b:commandButton>
+         </b:dataTableColumn>
+         </b:dataTable>
+			</b:column>
+			</b:form>
+
+			</b:panel>
+			
+			<b:modal id="amodal" close-on-escape="true" backdrop="false" title="Details Lots" styleClass="modallotdetails" size="modal-lg">
+   	 	<b:panel id="formlotdetails">
+   	 				<!-- <b:well>  
+  	
+       <b:panelGrid columns="4" style="margin-bottom:10px" cellpadding="2">
+		    <b:inputText  value="#{lotsMB.idlot}"  label="Code Lot"  disabled="true"/>
+		     <b:inputText value="#{lotsMB.nomCompletfourn}" label="Fournisseur" disabled="true" />
+		     	<b:inputText  value="#{lotsMB.idregion}"  label="Region" disabled="true"/>
+		    <b:inputText  value="#{lotsMB.transporteur}" label="Transporteur" disabled="true"/> 
+            <b:inputText  value="#{lotsMB.noplaque}"  label="No Plaque" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.qttTotapc}" label="Quantite total" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.date_transport}"  label="Date transport" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.date_livraison}"  label="Date Livraison" disabled="true"/>
+		  </b:panelGrid>
+                </b:well> -->
+                <b:row></b:row>
+   	 	<b:dataTable id="table_fourn" value="#{lotsMB.lotdetailsbyid()}" var="lotd" excel="true"
+                 csv="true" pdf="true"  copy="true" print="true">
+               <b:dataTableColumn value="#{lotd.achats.achatId}" label="Code Achat" />
+               <b:dataTableColumn value="#{lotd.achats.achatQtTotal}" label="Quantite"/>
+               <b:dataTableColumn value="#{lotd.achats.achatPrix}" label="Prix"/> 
+               <b:dataTableColumn value="#{lotd.achats.achatDate}" label="Date"/>
+			   <b:dataTableColumn value="#{lotd.achats.producteur.producteurNomComplet}" label="Producteur" />
+			   <b:dataTableColumn value="#{lotd.achats.parcelle.parcelleId}" label="Parcelle "/>
+			   <b:dataTableColumn value="#{lotd.achats.region.regionId}" label="Region"/>
+			   </b:dataTable>
+			   </b:panel>
+   	 	</b:modal>
+   	 	
+			</ui:define>
+			</ui:composition>

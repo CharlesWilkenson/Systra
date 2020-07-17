@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Achat
+</title>
+<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+
+	 <link rel="icon" type="image/png" href="../images/logosys.png" />
+ <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+	</h:head>
+
+ 			<b:form id="formexpo">
+			<b:modal close-on-escape="true" backdrop="false" id="amodal" title="L'ensemble de lots composant l'exportation"  styleClass="modalexpo" size="modal-lg" >
+
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{exportationMB.listerLotExporterby().size()}"/>
+
+	
+         <b:dataTable value="#{exportationMB.listerLotExporterby()}" var="item">
+         <b:dataTableColumn value="#{item.idLot.lotid}" label="Id Lot"/>
+       	 <b:dataTableColumn value="#{item.qtt_exp}" label="Quantite"/>
+   	     <b:dataTableColumn value="#{item.prixLot_expo}" label="Prix"/>
+   	     
+   	     <b:dataTableColumn label="">
+	<b:commandButton value="Tracabilite" look="primary"
+            		ajax="true" 
+           			 onclick="ajax:lotsMB.lotdetailsbyid()"   
+           			 update="formlotdetails"
+           			oncomplete="$('.modallotdetails').modal();return false;"
+                  size="sm">
+                 <f:param name="idlot" value="#{item.idLot.lotid}"></f:param>
+            </b:commandButton>
+   	     </b:dataTableColumn>
+  	     </b:dataTable>
+                
+                </b:modal>
+		     	</b:form>
+   	
+ <!-- FIN du code du madal -->
+   	
+   	<!-- Lister tous les exportations -->
+   	<b:panel >
+   	<f:facet name="heading">
+<h:outputLabel value="Liste des exportations" />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{exportationMB.listerExportation().size()}" />
+ </f:facet>
+   		<h:form>	
+	
+	 <b:column span="12">
+            <b:dataTable id="table_fourn" value="#{exportationMB.listerExportation()}" var="expo" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+               <b:dataTableColumn value="#{expo.idExportation}" label="ID Exportation" />
+               <b:dataTableColumn value="#{expo.qtt_exporter}" label="Quantite"/>
+               <b:dataTableColumn value="#{expo.prixtotal_export}" label="Prix"/>
+               <b:dataTableColumn value="#{expo.date_export}" label="Date"/>
+               <b:dataTableColumn value="#{expo.client}" label="Client"/>
+               <b:dataTableColumn label="Action">
+            <b:commandButton value="Voir details" icon="search" look="primary"
+             ajax="true" 
+            onclick="ajax:exportationMB.rechercherLotexporter()"   
+            update="formexpo"
+           	oncomplete="$('.modalexpo').modal();return false;"
+                  size="sm">
+                <f:param name="codeExpo" value="#{expo.idExportation}"></f:param>
+            </b:commandButton>
+             </b:dataTableColumn>
+            </b:dataTable>
+            </b:column>
+			</h:form>
+			</b:panel>
+	
+	<b:form id="formlotdetails">
+	
+<b:modal id="amodal" title="Tracabilite" styleClass="modallotdetails" size="modal-lg">
+   	 	<b:panel >
+   	 				<b:well>  
+  	
+       <b:panelGrid columns="4" style="margin-bottom:10px" cellpadding="2">
+		    <b:inputText  value="#{lotsMB.idlot}"  label="Code Lot"  disabled="true"/>
+		     <b:inputText value="#{lotsMB.nomCompletfourn} #{lotsMB.idfournisseur}"  label="Fournisseur" disabled="true" />
+		     	<b:inputText  value="#{lotsMB.idregion}"  label="Region" disabled="true"/>
+		    <b:inputText  value="#{lotsMB.transporteur}" label="Transporteur" disabled="true"/> 
+            <b:inputText  value="#{lotsMB.noplaque}"  label="No Plaque" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.qttapc}" label="Quantite après contrôle" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.date_transport}"  label="Date transport" disabled="true"/>
+		   	<b:inputText  value="#{lotsMB.date_livraison}"  label="Date Livraison" disabled="true"/>
+		  </b:panelGrid>
+                </b:well>
+                <b:row></b:row>
+               
+   	 	<b:dataTable id="table_fourn" value="#{lotsMB.lotdetailsbyid()}" var="lotd" excel="true"
+                 csv="true" pdf="true"  copy="true" print="true">
+               <b:dataTableColumn value="#{lotd.achats.achatId}" label="Code Achat" />
+               <b:dataTableColumn value="#{lotd.achats.achatQtTotal}" label="Quantite"/>
+               <b:dataTableColumn value="#{lotd.achats.achatPrix}" label="Prix"/> 
+               <b:dataTableColumn value="#{lotd.achats.achatDate}" label="Date"/>
+			   <b:dataTableColumn value="#{lotd.achats.producteur.producteurNomComplet}" label="Producteur" />
+			   <b:dataTableColumn value="#{lotd.achats.parcelle.parcelleId}" label="Parcelle "/>
+			   <b:dataTableColumn  value="#{lotd.achats.region.regionId}" label="Region"/>
+
+			  
+			   </b:dataTable>
+			   </b:panel>
+   	 	</b:modal>
+   	 	</b:form>
+   	 	
+
+   	 	
+
+ </ui:define>
+	</ui:composition>

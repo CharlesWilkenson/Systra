@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Achat
+</title>
+<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+
+	
+	</h:head>
+	<b:panel>
+	<f:facet name="heading">
+	<img alt="hola" src="../logo/catalogue_achats_responsable.jpg" height="30" width="40"/>
+<h:outputLabel value="Liste des achats non livrés" />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{achatsMB.getallachats().size()}" />
+ </f:facet>
+		   	<b:form>
+		   	<b:column span="12">
+			<b:dataTable  value="#{achatsMB.getallachats()}" var="ach" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                       <b:dataTableColumn value="#{ach.achatId}" label="Code Achat" />
+               			   <b:dataTableColumn value="#{ach.fournisseur.fournisseurNom} #{ach.fournisseur.fournisseurPrenom}  (#{ach.fournisseur.fournisseurId})"  label="Fournisseur"/>
+			  <b:dataTableColumn value="#{ach.producteur.producteurNomComplet}" label="Producteur" />
+			   <b:dataTableColumn value="#{ach.region.regionId} (#{ach.region.zone_id})" label="Region" />			   
+			   <b:dataTableColumn value="#{ach.parcelle.parcelleId} (#{ach.parcelle.parcelleCommune})" label="Parcelle" />
+			   <b:dataTableColumn value="#{ach.achatQtTotal}" label="Qtt Total" />
+			   <b:dataTableColumn value="#{ach.achatPrix}" label="Prix Total"/>
+			   <b:dataTableColumn value="#{ach.achatDate}" label="Date" dataType="Date"/>
+			   <b:dataTableColumn value="#{ach.achatEtat}" label="Etat"/>
+			 
+			</b:dataTable>
+			
+			</b:column>
+			
+			</b:form>
+   </b:panel>
+   </ui:define>
+   </ui:composition>
+   

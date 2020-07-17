@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboardslister.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+	<title>
+Parcelles
+</title>
+  <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+	
+		<script type="text/javascript" >
+
+	function invokeVider() {
+		document.getElementById("vider:parcelle").click();
+	}
+
+</script>
+
+	<p:growl id="messages" showDetail="true" life="2000" />
+	<b:panel>
+   <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputText value="Localisation des Parcelles" />
+          <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{parcelleMB.listParcelleActif().size()}" />
+ 
+   	</f:facet>	
+   	<h:form prependId="false">
+   	
+   				<p:growl life="3000" showDetail="true" />
+				<p:gmap  center="18.5391700,-72.3350000" zoom="15"   type="HYBRID" style="width:100%;height:500px" model="#{parcellesMap.polygonModel}"  >
+				   <p:ajax event="stateChange" listener="#{eventView.onStateChange}" update="messages" />
+        <p:ajax event="pointSelect" listener="#{eventView.onPointSelect}" update="messages" />
+				</p:gmap> 
+				</h:form>
+
+		
+   	</b:panel>
+	</ui:define>
+	</ui:composition>

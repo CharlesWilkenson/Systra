@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Rechercher Fournisseur
+</title>
+
+<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+<style type="text/css">
+	h3 {
+	color:gray;
+    font-family: 'Patua One';
+	text-align: center;
+	font-size: 30px;
+	margin: auto;
+	width:30%;
+	text-align:center;	
+	 margin-top:-10px;
+
+}
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+	.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}	
+</style>
+	</h:head>
+<b:messages style="margin-left:190px;margin-right:140px;" id="messages"
+            globalOnly="true"
+            severity="error,fatal,info,warn"/>
+<b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+ <h:body >    
+ 
+
+ 
+  <b:form id="req">
+  <h3><h:outputFormat value="Rechercher fournisseur" rendered="#{fournisseurMB.verification}"></h:outputFormat></h3>
+  
+     	<b:panel  style="margin:auto;width:50%" rendered="#{fournisseurMB.verification}">
+  <f:facet name="heading">
+     <i style="padding-right:20px" /><h:outputLabel value="Rechercher fournisseur" />
+  </f:facet>
+     
+    <b:inputText required="true" placeholder="Entrer le code du fournisseur"  value="#{fournisseurMB.fournID}" style="padding-right:50px;"  colMd="10" labelColMd="2" >
+   		 <f:facet name="append">
+            <b:commandButton look="primary" update="fournForm,messages,growl,req"  iconAwesome="search" icon-align="right">
+            <f:ajax execute="@form" listener="#{fournisseurMB.Editfourn()}" ></f:ajax>
+            </b:commandButton> 
+        </f:facet>
+        </b:inputText>
+
+</b:panel></b:form>
+
+
+ <b:form  horizontal="true" id="fournForm">
+  <h3><h:outputFormat value="Modifier fournisseur" rendered="#{fournisseurMB.showfourn}"></h:outputFormat></h3>
+  
+<b:panel title="Fournisseur" look="primary" style="width:80%;margin:auto" rendered="#{fournisseurMB.showfourn}">
+	
+	  
+     <f:facet name="heading"> 
+	      <b:iconAwesome name="fa-key" /> 
+      <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{fournisseurMB.fournID}"  />
+ 
+   	</f:facet>
+   	<h:inputHidden value="#{fournisseurMB.fournID}" />
+    <h:inputHidden value="#{fournisseurMB.fournEtat}"  />
+  
+   	<b:column >
+   	<b:well >
+   	<b:panelGrid columns="2">
+
+
+   	  <b:inputText label="ID"  placeholder="Code" name="fournID" id="fournID" value="#{fournisseurMB.fournID}"    colMd="8" labelColMd="4">
+       
+    </b:inputText>
+    
+      <b:inputText placeholder="Nom" id="nom" name="fournNom" value="#{fournisseurMB.fournNom}"  label="Nom " colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    
+    <b:inputText placeholder="Prenom" name="fournPrenom" value="#{fournisseurMB.fournPrenom}"  label="Prenom " colMd="8" labelColMd="4">
+  
+    </b:inputText>
+    <b:inputText placeholder="CIN/NIF" name="fournNif" value="#{fournisseurMB.fournCin_nif}"  label="CIN/NIF" colMd="8" labelColMd="4">
+        
+    </b:inputText>
+    <b:inputText placeholder="Addresse" name="fournAdresse" value="#{fournisseurMB.fournAdresse}"   label="Addresse " colMd="8" labelColMd="4">
+      
+    </b:inputText>
+    <b:inputText placeholder="Telephone" name="fournTel" value="#{fournisseurMB.fournTelephone}" mask="9999-9999"  label="Telephone" colMd="8" labelColMd="4">
+
+    </b:inputText>
+    <b:inputText placeholder="Email" name="fournEmail" value="#{fournisseurMB.fournEmail}"   label="Email" colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    <b:inputText placeholder="Usine" name="fournUsine" value="#{fournisseurMB.fournUsine}"   label="Usine" colMd="8" labelColMd="4">       
+    </b:inputText> 
+    
+
+    
+  
+    
+    </b:panelGrid>
+    
+    </b:well>
+    <b:buttonGroup>
+             <b:commandButton update="fournForm,req"  look="primary"  value="Precedent" >
+		<f:ajax execute="@form" listener="#{fournisseurMB.retour()}" ></f:ajax>
+		<b:iconAwesome  name="fa-arrow-circle-left" size="lg" /> 
+		      </b:commandButton>
+    <b:commandButton value="Modifiier" rendered="#{fournisseurMB.fournEtat=='Actif' and request.isUserInRole('ADMIN')}" icon-awesome="fa-edit" size="md"  action="#{fournisseurMB.updateFourn()}" look="primary" />   
+  
+     
+		      
+     
+      
+            
+             <b:commandButton update="fournForm,messages,growl" value="Desactiver" rendered="#{fournisseurMB.fournEtat=='Actif' and request.isUserInRole('ADMIN')}" icon="remove" look="primary"  tooltip="Desactiver" size="md" >
+            <f:ajax execute="@form" listener="#{fournisseurMB.desActiverfourn()}" ></f:ajax>
+            </b:commandButton>
+            
+            <b:commandButton update="fournForm,messages,growl" value="Reactiver" rendered="#{fournisseurMB.fournEtat=='Passif' and request.isUserInRole('ADMIN')}" look="primary"   tooltip="Activer" size="md" >
+<f:ajax execute="@form" listener="#{fournisseurMB.Activerfourn()}" ></f:ajax>
+            </b:commandButton></b:buttonGroup>
+    </b:column>
+  
+
+	</b:panel>
+	<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../validation/valid.js"/>
+	 </b:form>
+	 
+	 
+	 
+	 
+<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../validation/valid.js"/>
+	
+</h:body>
+   	
+</ui:define>
+</ui:composition>

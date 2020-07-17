@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+		xmlns:gis="http://gisfaces.com"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+	<ui:define name="contentdashboard">
+
+	<b:panel>
+   <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputText value="Plots" />
+   	</f:facet>
+   	
+	<h:form>
+		<h:panelGroup id="panel1" layout="block" styleClass="gisfacesMapPanel" ></h:panelGroup>
+		<gis:map mapPanel="panel1"
+		  coordinatesPanel="coordinates" 
+		  background="hybrid" latitude="18.5391700" longitude="-72.3350000" zoom="9"></gis:map>
+	</h:form>
+	</b:panel>
+	</ui:define>
+	</ui:composition>

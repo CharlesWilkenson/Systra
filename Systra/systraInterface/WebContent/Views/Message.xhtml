@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+	<title>
+Dashboard
+</title>
+  <link rel="icon" type="image/png" href="../images/logosys.png" />
+	
+ <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+	</h:head>
+<b:messages id="messages" style="width:70%;margin:auto"
+            globalOnly="true"
+            severity="error,fatal"/>
+<b:growl id="growl" 
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+  <h:body >    
+<b:form id="formRead" horizontal="true">
+
+   	 	<b:panel style="margin-top:-110px;width:70%;margin:auto"  rendered="#{messageMB.showread}">
+	    <f:facet name="heading">  
+      <b:badge style="margin-left:10px; background-color:#5cb85c" >
+    <span> <b:image  height='30' width='50'  value="../logo/message2.png" name="">
+
+  </b:image> 
+ 
+</span>
+      </b:badge>
+      	 
+   	</f:facet>
+
+<b:panelGrid columns="2">
+ <h:outputFormat value="Nom Complet :" style="font-family: 'Patua One', cursive;"/>
+ <h:outputFormat  value="#{connect.nomCompletClient}" style="font-family: 'Patua One', cursive;margin-left:-280px"/>
+ <h:outputFormat value="Destinateur :" style="font-family: 'Patua One', cursive;"/>
+<h:outputFormat value="#{connect.mailClient}" style="font-family: 'Patua One', cursive;margin-left:-285px"/>
+</b:panelGrid>
+ <b:column>
+<b:inputTextarea   value="#{connect.messageClient}" rows="15" col-md="20"/>
+ 	 				
+   	 				     <b:commandButton look="primary" update="formResponse,formRead" value="Repondre" style="margin-left:4px;"
+   	 				     ajax="true" >
+    	<f:ajax execute="@form" listener="#{messageMB.repondre()}" ></f:ajax>
+          </b:commandButton>
+          
+               <b:commandButton look="primary" update="formResponse,formRead" value="Supprimer" style="margin-left:7px;"
+   	 				     ajax="true" >
+   	 				     <b:iconAwesome  name="trash" size="lg" />
+    	<f:ajax execute="@form" listener="#{messageMB.deleteMessage()}" ></f:ajax>
+          </b:commandButton>
+ 
+           </b:column>
+   	 			</b:panel>	  
+	 </b:form>	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<b:form  id="formResponse" horizontal="true">
+   	 	<b:panel style="width:70%;height:50%;margin:auto"  rendered="#{messageMB.showresponse}">
+	    <f:facet name="heading">  
+      <b:badge style="margin-left:10px; background-color:#5cb85c" >
+    <span> <b:image  height='30' width='50'  value="../logo/message2.png" name="">
+
+  </b:image> 
+ 
+</span>
+      </b:badge>
+      	 
+   	</f:facet>
+
+
+<b:column>
+<b:inputTextarea   value="#{messageMB.message}" rows="15" col-md="20"/>
+ 	 				
+   	 		     <b:commandButton look="primary" update="formResponse,formRead" value="Retour" style="margin-left:2px;"
+   	 				     ajax="true" >
+   	 				     <b:iconAwesome  name="fa-arrow-circle-left" size="lg" />
+    	<f:ajax execute="@form" listener="#{messageMB.retour()}" ></f:ajax>
+          </b:commandButton>
+          
+               <b:commandButton  look="primary" update="messages,growl"
+                value="Envoyer" style="margin-left:7px;" ajax="true">   	 			
+    	<f:ajax execute="@form" listener="#{messageMB.repondreClient()}" ></f:ajax>
+          </b:commandButton>
+          </b:column>
+   	 			</b:panel>	  
+	 </b:form>
+
+</h:body> 
+
+</ui:define>
+</ui:composition>

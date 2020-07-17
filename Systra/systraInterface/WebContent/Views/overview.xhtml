@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboardOverview.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="contentdashboard2">
+	
+	<h:head>
+		<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<link rel="stylesheet" type="text/css" href="../resources/css/popover.css"/>
+<!--===============================================================================================-->
+	
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+
+	 <style>
+	   .bg-1 {
+      color: #bdbdbd;
+  }
+
+	 .footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: rgba(93,84,240,0.5);;
+   color: white;
+   text-align: center;
+}
+</style>
+	 </h:head>
+	
+
+<h:body>
+
+                      <b:row >
+                        
+                   <b:column style="margin-left:-20px;" col-xs="22" col-md="18" >
+				  
+                    <div class="col-lg-3 col-md-6">
+                    <a href="/faces/Views/producteurs.xhtml">
+                       <div class="popover__wrapper"> 
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                    
+                                        <i ><b:image name="img"  tooltip="CLiquez pour voir tous les producteurs" tooltip-position="bottom" class="img-circle" alt="hola" value="../images/apromalpi-perou-mangueportrait.jpg" height="250px" width="250px"/></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        </a>
+                            <h4>
+                           <h:outputText style="color:white; margin-left:60px;
+                           
+" value="#{producteurMB.listerAll().size()} Producteurs"/> </h4>
+                        
+                        </div></b:column>
+                        
+        <b:column  col-xs="22" col-md="18" >
+				  
+                    <div class="col-lg-3 col-md-6">
+                    <a href="/faces/Views/listparcelle.xhtml">
+                       <div class="popover__wrapper">  
+                            <div class="panel-heading">
+                            
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <b:image name="img" tooltip="CLiquez pour voir toutes les parcelles" tooltip-position="bottom" alt="hola" value="../images/plantation-de-mangue1-600x400.jpg" height="250px" width="250px" class="img-circle"/>
+                                    </div>
+                                      <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                               </div></div></div></div></a>
+                      
+                            <h4>
+                           <h:outputText style="margin-left:100px;color:white; margin-left:60px;
+                        " value="#{parcelleMB.listParcelleActif().size()} Parcelles"/> </h4>
+                        </div>
+                      </b:column>
+
+      
+      
+                    
+                    
+                    <b:column  col-xs="22" col-md="18" >
+			       
+                    <div class="col-lg-3 col-md-6">
+                       <a href="/faces/Views/listeachat.xhtml">
+                       <div class="popover__wrapper">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i > <b:image name="achat" tooltip="CLiquez pour voir tous les achats non livrés" tooltip-position="bottom" value="../images/catalogue_achats_responsable.jpg" class="img-circle"  alt="hola"  height="250px" width="250px"/></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div></a>
+                        
+                        <h:outputText value="#{achatsMB.allachats}" style="display:none"/>
+                               <h4><h:outputText rendered="#{achatsMB.listachats.size()>1}" style="margin-left:60px;text-align:center;color:white; margin-left:60px;
+" value="#{achatsMB.listachats.size()} Achats non livrés"/></h4>
+                       
+                            <h4><h:outputText rendered="#{achatsMB.listachats.size()==1}" style="margin-left:60px;text-align:center;color:white; margin-left:60px;
+                            " value="#{achatsMB.listachats.size()} Achat non livré"/></h4>
+                       
+                       <h4><h:outputText rendered="#{achatsMB.listachats.size()==0}" style="margin-left:60px;text-align:center;color:white; margin-left:60px;
+              " value="Pas d'achat non livré"/></h4>
+                       
+                        </div>                 
+                    </b:column>
+                    
+                    
+                     <b:column  col-xs="22" col-md="18">
+				  
+                    <div class="col-lg-3 col-md-6">
+                    <a href="/faces/Views/listlots.xhtml">
+                       <div class="popover__wrapper">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i ><b:image name="lot" tooltip="CLiquez pour voir tous les lots non exportés" tooltip-position="bottom" class="img-circle" alt="hola" value="../images/emballage.jpg" height="250px" width="250px"/></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+  
+                            </div>
+                      </a>                                 
+                    </div> 
+                    
+                    <h:outputText value="#{lotsMB.getlistallLots()}" style="display:none"/>
+                    <h4><h:outputText rendered="#{lotsMB.listlots.size()>1}" style="margin-left:60px;text-align:center;color:white; margin-left:60px;background: rgba(93,84,240,0.5);" value="#{lotsMB.listlots.size()} Lots non exportés"/></h4>
+                     <h4><h:outputText rendered="#{lotsMB.listlots.size()==1}" style="margin-left:60px;text-align:center;color:white; margin-left:60px" value="#{lotsMB.listlots.size()} Lot non exporté"/></h4>
+                       <h4><h:outputText rendered="#{lotsMB.listlots.size()==0}" style="margin-left:60px;text-align:center;color:white; margin-left:60px;" value="Pas de Lot non exporté"/></h4>
+                          
+                                               
+                    </b:column>                        
+                  </b:row>  
+ 
+	</h:body>
+	</ui:define>
+	</ui:composition>

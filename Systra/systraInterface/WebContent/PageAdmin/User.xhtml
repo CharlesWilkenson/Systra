@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+	<meta charset="utf-8"/>
+<title>
+Administration
+</title>
+<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+<style type="text/css">
+	h3 {
+	color:gray;
+    font-family: 'Patua One';
+	text-align: center;
+	font-size: 30px;
+	margin: auto;
+	width:30%;
+	text-align:center;	
+	 margin-top:-10px;
+}
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+	.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}	
+</style>
+	</h:head>
+	<b:messages id="messages"
+            globalOnly="true"
+            severity="error,fatal" style="width:80%;margin:auto"/>
+    <b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+   
+   <h:body>
+        <h3>Nouvel utilisateur</h3>
+ 
+ <b:panel title="Nouveau Utilisateur" look="primary" style="width:80%;margin:auto">
+     <b:form id="userForm" horizontal="true">
+    
+      <b:column > 
+      <b:well >
+   	<b:panelGrid columns="2">
+   
+
+    <b:inputText value="#{adminMB.utilisateurEmail}" placeholder="Email"  name="userEmail" label="Email" colMd="8" labelColSm="4">
+   
+    </b:inputText>
+    
+       <b:selectOneMenu value="#{adminMB.utilisateurSexe}"  label="Sexe" colMd="8" labelColSm="4"> 
+   
+<f:selectItem itemLabel="Homme" itemValue="Homme" />
+    <f:selectItem  itemLabel="Femme" itemValue="Femme" />
+    </b:selectOneMenu>
+    
+    	
+
+   	<b:inputText value="#{adminMB.utilisateurNom}" name="userNom" placeholder="Nom"  label="Nom" colMd="8" labelColSm="4">
+
+   	</b:inputText>
+   
+<b:inputText value="#{adminMB.utilisateurTelephone}" name="userTel" placeholder="Telephone"  label="Telephone" mask="9999-9999" colMd="8" labelColSm="4">
+  </b:inputText>
+    
+   	<b:inputText  value="#{adminMB.utilisateurPrenom}" name="userPrenom" placeholder="Prenom"  label="Prenom" colMd="8" labelColSm="4">
+   
+   	</b:inputText>
+   	
+   
+   	
+   			<b:inputText value="#{adminMB.utilisateurAdresse}" name="userAdresse" placeholder="Adresse"  label="Adresse" colMd="8" labelColSm="4">
+   
+   	</b:inputText>
+   	
+   
+ 
+ 
+  <b:selectOneMenu value="#{adminMB.utilisateurFonction}"  label="Fonction" colMd="8" labelColSm="4"> 
+    <f:selectItems var="item" value="#{roleMB.listerRoles()}" itemLabel="#{item.rolename}" itemValue="#{item.rolename}" />
+    </b:selectOneMenu>
+   
+  
+  </b:panelGrid>
+  	</b:well>
+  	<b:buttonGroup>
+  	 <b:commandButton  icon="user" size="md" action="#{adminMB.adduser()}" value="Creer"  look="primary" />
+
+ 
+   	 <b:commandButton update="userForm" icon-awesome="trash" size="md"  value="Vider"  look="primary" >
+   	 <f:ajax execute="@form" listener="#{adminMB.clearField()}"></f:ajax>
+   	 </b:commandButton>
+ </b:buttonGroup>
+ </b:column>
+
+
+<script type="text/javascript" src="../validation/valid.js"/>
+	<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+   	</b:form>
+   	
+   	</b:panel>
+     
+	
+ 	<script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../validation/valid.js"/>
+</h:body>
+   	</ui:define>
+   	</ui:composition>

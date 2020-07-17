@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Achat
+</title>
+<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+
+	 <link rel="icon" type="image/png" href="../images/logosys.png" />
+	 	 	 	 <style type="text/css">
+	h3 {
+	color:gray;
+    font-family: 'Patua One';
+	text-align: center;
+	font-size: 30px;
+	margin: auto;
+	width:30%;
+	text-align:center;	
+	 margin-top:-10px;
+
+}
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+
+.previous-fieldset {
+	display: none;
+	float: left;
+}
+.next-fieldset {
+	float: right;
+},
+a.next-fieldset,
+a.previous-fieldset {
+	color: #ccc;
+}
+
+.clear {
+	clear: both;
+}
+.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}
+		</style>
+	</h:head>
+	
+	<b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+         
+         <b:messages id="messages"
+            globalOnly="true"
+            severity="error,fatal,info,warn" style="width:50%;margin:auto"/>
+  <h:body>        
+
+
+
+     
+      <h3>
+           Nouvel achat</h3>   
+       <b:form id="back"> 
+  	<b:panel title="Verification du producteur" look="primary" style="width:50%;margin:auto" rendered="#{achatsMB.hideButton}">
+
+   	
+   	  <b:column>
+   	  
+    	  <b:inputText   placeholder="Entrer le code du producteur" value="#{achatsMB.idProd}" style="padding-right:50px;" required="true"  colMd="10" labelColMd="2" >
+   		 <f:facet name="append">
+            <b:commandButton look="primary" update="back,achatForm,messages"  iconAwesome="check" icon-align="right">
+            <f:ajax execute="@form" listener="#{achatsMB.rechercherprods()}" ></f:ajax>
+            </b:commandButton> 
+         </f:facet>
+        </b:inputText>
+ 
+	    </b:column >
+	    </b:panel>
+        </b:form>    
+        
+
+        
+        <b:form horizontal="true" id="achatForm">
+   	 <b:formGroup> 
+
+	    
+	   	<b:panel style="margin-left:190px;margin-right:140px;" look="primary" rendered="#{achatsMB.hideTab}">
+	<f:facet name="heading">
+     <i style="padding-right:20px;margin-left:300px" />
+    
+      <b:badge   style="margin-left:10px; background-color:#5cb85c" value="No : #{achatsMB.achatId}" />
+   	</f:facet>
+	    <b:column >
+	    <b:well>
+	     <b:panelGrid  columns="2" >
+			 <b:inputText label="Nom Complet" value="#{achatsMB.nomprod}" disabled="true" colMd="8" labelColMd="4" /> 
+			  <b:selectOneMenu value="#{achatsMB.idparcelle}" required="true" colMd="8" labelColMd="4" label="Parcelle">
+			    <f:selectItems var="item" value="#{achatsMB.listparbypro}" itemLabel="#{item.parcelleId} (#{item.parcelleCommune} -#{item.parcelleSectioncommunale})" required="true" itemValue="#{item.parcelleId}"  />
+			    </b:selectOneMenu>	
+    		<b:inputText  value="#{achatsMB.achatQtTotal}" id="achatQT" name="achatQT" mask="integer" label="Quantité(douz)"   colMd="8" labelColMd="4"/>    		
+		    <b:inputText  value="#{achatsMB.achatPrixTotal}" id="achatPT" name="achatPT" mask="decimal" label="Prix(grde)" required="true" colMd="8" labelColMd="4"/>
+		     <b:selectOneMenu value="#{achatsMB.idregion}"  placeholder="Region" label="Region" colMd="8" labelColMd="4" required="true">
+			    <f:selectItems var="item" value="#{achatsMB.allregion}" itemLabel="#{item.regionId}     -#{item.zone_id}" itemValue="#{item.regionId}"/>
+			    </b:selectOneMenu>
+			     <b:datepicker  id="achatDate" name="achatDate" value="#{achatsMB.achatDate}" label="Date Achat"  colMd="8" labelColMd="4" >
+           </b:datepicker>
+         	<b:inputText value="#{achatsMB.idfournisseur}" id="achatIDFour" name="achatIDFour" label="Fournisseur"  colMd="8" labelColMd="4" />
+		 </b:panelGrid >
+		 </b:well>
+			    </b:column>
+<b:buttonGroup>
+	      <b:commandButton  update="back,achatForm" look="primary"  value="Precedent" rendered="#{achatsMB.hideTab}" >
+		<f:ajax execute="@form" listener="#{achatsMB.retour()}" ></f:ajax>
+		<b:iconAwesome  name="fa-arrow-circle-left" size="lg" /> 
+		      </b:commandButton>
+	    
+	         <b:commandButton update="achatForm" look="primary" icon="trash" value="Vider   "  >
+		     <f:ajax execute="@form" listener="#{achatsMB.Clear()}" ></f:ajax>
+		      </b:commandButton>
+	    
+<b:commandButton look="primary" update="messages,achatForm,back"   value="Enregistrer" icon="save" >
+	    <f:ajax execute="@form" listener="#{achatsMB.verification()}" ></f:ajax>  
+	    </b:commandButton>
+
+	 </b:buttonGroup>
+	</b:panel>
+	 </b:formGroup> 
+
+	</b:form>
+
+	</h:body>
+	</ui:define>
+	</ui:composition>

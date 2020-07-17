@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.net.ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	<ui:define name="contentdashboard">
+	<h:head>
+
+
+   <!-- Styles -->
+<style type="text/css">
+	h2 {
+	color:gray;
+	font-family: 'Patua One', cursive;
+	text-align: center;
+	font-size: 40px;
+	margin: 10px 0 0;
+	padding: 0;
+border-radius: 50%;
+}
+
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+	.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}	
+</style>
+    </h:head>
+	
+
+        <h:body>
+			
+			<h:form id="fournForm">
+			
+			<b:panel  style="size:200px" look="primary">
+					            <f:facet name="heading">
+     <i style="padding-right:20px" /> <b:label value="Localisation" style="margin-left:410px;font-size: 20px;font-family: 'Patua One', cursive;"></b:label>
+	</f:facet>
+					<b:column >
+	                 <b:progressBar  renderCaption="false" animated="true" value="40" min="0" max="100" tooltip="Localisation" severity="info" visible="md..." >
+ 
+ </b:progressBar>
+
+	                 <b:well >
+                     <b:panelGrid columns="2">
+                                   <b:selectOneMenu value="#{parcelleMB.parcDepartement}" id="dep" name="name"  label="Departement"  colMd="8" labelColMd="4"  >
+				   <f:selectItem  itemLabel="" itemValue="" /> 
+				  <f:selectItem  itemLabel="OUEST" itemValue="392" />  
+				  <f:selectItem  itemLabel="SUD-EST" itemValue="393" /> 
+				  <f:selectItem  itemLabel="NORD" itemValue="394" />
+				  <f:selectItem  itemLabel="NORD-EST" itemValue="395" />
+				  <f:selectItem  itemLabel="ARTIBONITE" itemValue="396" />
+				  <f:selectItem  itemLabel="CENTRE" itemValue="397" />
+				  <f:selectItem  itemLabel="SUD" itemValue="398" />
+				  <f:selectItem  itemLabel="GRANDE-ANSE" itemValue="399" />  
+				  <f:selectItem  itemLabel="NORD-OUEST" itemValue="400" />
+				  <f:selectItem  itemLabel="NIPPES itemValue" itemValue="401" />    
+			 
+				    </b:selectOneMenu>
+				    
+				<select  jsf:value="#{parcelleMB.parcDepartement}" class="form-control">
+				<option value="">Please select</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+				<option value="D">D</option>
+				</select>
+				    
+				    
+<input type="text" class="form-control" name="fournNoms" jsf:value="#{uniqueParcelleMB.parcLocalite}" placeholder="commune"  />
+   
+				     <b:inputText name="fournNom"  colMd="8" labelColMd="4" class="form-control" label="Localite" p:placeholder="commune"  >
+    			    </b:inputText>
+
+								</b:panelGrid></b:well>
+								<b:commandButton   value="Valider"></b:commandButton>
+								</b:column></b:panel>
+			
+			</h:form>
+			
+			
+					
+		  <form action="" method="post">
+    <label for="name">Pseudo: </label><input type="text" id="names" addClass="error"  name="names"/>
+     <div id="error"></div> 
+    <label  id="error"></label>
+    <input type="submit" id="envoyer" />
+  </form>
+		 <script type="text/javascript" src="../validation/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+	<script type="text/javascript">
+
+	/****************************VERIFICATION FOURNISSEUR*************************/
+	/*	$.validator.addMethod("combo", function(value, element) {
+			   if (combo == 1) {
+			        return false;
+			        
+			     }
+		    return true;
+		},"You should select a country");
+	*/
+	 function validateForm(formID, Obj){
+				$.validator.addMethod("combo", function(value, element) {
+
+		        var books = $('#combo');
+		        if (books.val() === '') {
+		            alert("Please select an item from the list and then proceed!");
+		            $('#combo').focus();
+
+		            return false;
+		        }
+		        else return true;
+		    });}
+
+	 
+	 
+	$( document ).ready( function () {
+				
+				$( "#fournForm" ).validate( {
+					 errorClass: "my-error-class",
+					   validClass: "my-valid-class",
+				
+					rules: {
+						fournID:{
+							required:true,
+							minlength: 3
+						}, 
+						fournNom:{
+							combo:true,
+							required:true,
+							minlength: 3,
+						
+						},
+						fournPrenom: {
+							required: true,
+							minlength: 3
+						},
+						fournNif: {
+							required: true,
+							minlength: 5
+						},
+						fournAdresse: {
+							required: true,
+							minlength: 5,
+							
+						},
+						fournEmail: {
+							required: true,
+							email: true
+						},
+						fournTel: {
+							required: true,
+							minlength:8
+						},
+						fournNomComplet:{
+							required:true,
+							minlength:3
+							
+						},
+					
+						fournTel: {
+							required:true,
+							minlength:8
+						},
+						prodNomComplet:{
+							required:true,
+							minlength:3
+						
+						},
+					
+						prodTel: {
+							required:true,
+							minlength:8
+						},
+					},
+					messages: {
+						fournID: {
+							required:"Entrer l'ID",
+						
+							minlength:"Minimun 3 Charactères"
+						},
+						fournNom:{
+							required:"Entrer le nom",
+							minlength:"Minimun 3 Charactères",
+						
+						},
+						fournPrenom: {
+							required:"Entrer le prenom",
+							minlength:"Minimun 3 Charactères"
+						},
+						fournNif: {
+							required:"Entrer le nif",
+							minlength:"Minimun 10 Charactères"
+						},
+						fournEmail: {
+							required:"Entrer l'email",
+							email:"Email invalide"
+						},
+						fournAdresse: {
+							required:"Entrer l'adresse",
+							minlength:"Minimun 5 Charactères"
+						},
+						fournTel: {
+							required:"Entrer le Tel",
+							minlength:"Minimun 8 Charactères"
+						},
+						prodNomComplet:{
+							required:"Entrer le nom complet",
+							minlength:"Minimun 3 Charactères"
+						
+						},
+					
+						prodTel: {
+							required:"Entrer le Tel",
+							minlength:"Minimun 8 Charactères"
+						},
+					},
+					errorElement: "em",
+					errorPlacement: function ( error, element ) {
+						// Add the `help-block` class to the error element
+						error.addClass( "help-block" );
+
+						// Add `has-feedback` class to the parent div.form-group
+						// in order to add icons to inputs
+						element.addClass( "has-feedback" );
+
+						if ( element.prop( "type" ) === "checkbox" ) {
+							error.insertAfter( element.parent( "label" ) );
+						} else {
+							error.insertAfter( element );
+						}
+
+						// Add the span element, if doesn't exists, and apply the icon classes to it.
+						if ( !element.next( "span" )[ 0 ] ) {
+							$( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element ).css("color", "#FF0000");
+						}
+					},
+					success: function ( label, element ) {
+						// Add the span element, if doesn't exists, and apply the icon classes to it.
+						if ( !$( element ).next( "span" )[ 0 ] ) {
+							$( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) ).css("color", "green");
+						}
+					},
+					highlight: function ( element, errorClass, validClass ) {
+						$( element ).addClass( "has-error" ).removeClass( "has-success" );
+						$( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" ).css("color", "#FF0000");
+					},
+					unhighlight: function ( element, errorClass, validClass ) {
+						$( element ).addClass( "has-success" ).removeClass( "has-error" );
+						$( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" ).css("color", "green");
+					}
+				} );
+			} );
+
+
+
+	</script>
+	</h:body>
+</ui:define></ui:composition>
+
+      
+    
+

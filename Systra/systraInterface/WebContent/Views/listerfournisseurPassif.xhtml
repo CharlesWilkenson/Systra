@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Lister Fournisseurs
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+
+      
+
+	 <b:panel>
+	 	<f:facet name="heading">
+<h:outputLabel value="Liste des fournisseurs" />
+     <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{fournisseurMB.listfournisseurPassif.size()}" />
+ </f:facet>
+	 
+	 <h:form>
+	   <b:row>
+	   <b:column span="3">
+	        <b:commandButton  value="Nouveau Fournisseur" look="primary"
+           action="creerfournisseur.xhtml?faces-redirect=true" size="sm"/>
+	    </b:column>
+	</b:row>
+	
+	  <b:column span="12">
+			<b:dataTable value="#{fournisseurMB.listfournisseurPassif}"  var="fourn" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+			   <b:dataTableColumn value="#{fourn.fournisseurId}" label="ID Fournisseur" />
+			   <b:dataTableColumn value="#{fourn.fournisseurNom}" label="Nom "/>
+			   <b:dataTableColumn value="#{fourn.fournisseurPrenom}" label="Prenom"/>
+			   <b:dataTableColumn value="#{fourn.fournisseurCin_nif}" label="CIN/NIF"/>
+			   <b:dataTableColumn value="#{fourn.fournisseurAdresse}" label="Adresse"/>
+			   <b:dataTableColumn value="#{fourn.fournisseurTelephone}" label="Telephone"/>
+			   <b:dataTableColumn value="#{fourn.fournisseurUsine}" label="Usine"/>
+			   <b:dataTableColumn rendered="#{request.isUserInRole('ADMIN')}" label="Action">   
+             <!-- Edit button --> 
+     
+            
+               <h:commandLink action="#{fournisseurMB.redirectTo2()}"
+			    style="background-color:blue;color:white;margin-left:5px; 
+ 			     border-radius:3px; text-decoration:none;">
+			   <f:param name="idfournisseur" value="#{fourn.fournisseurId}"></f:param>
+			   <b:iconAwesome name="fa-edit" style="border-radius:3px;background-color:#0059b3;" size="2x"></b:iconAwesome>
+               </h:commandLink>
+               
+      		 </b:dataTableColumn>
+			</b:dataTable>
+			</b:column>
+			</h:form>
+			
+   	</b:panel>
+</ui:define>
+</ui:composition>

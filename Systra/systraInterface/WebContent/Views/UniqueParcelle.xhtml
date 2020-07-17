@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+	<title>
+Localisation
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+	<b:messages globalOnly="true"  errorStyle="color:red;"/>
+<!-- 	<h:form>
+	 	<h:commandLink style="text-decoration:none; margin-top:50px" action="#{uniqueParcelleMB.destroy()}">
+   	 <b:iconAwesome  name="fa-arrow-circle-left" size="lg" style="text-decoration-line:none">         Precedent</b:iconAwesome>       
+
+   	</h:commandLink> 
+	</h:form> -->
+	<b:panel >
+	
+   <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputText value="Localisation d'une Parcelle" />
+   	</f:facet>	
+   	<h:form prependId="false">
+   <p:growl  life="3000" showDetail="true" />
+				<p:gmap   center="#{uniqueParcelleMB.mapCenter}" 
+				zoom="#{uniqueParcelleMB.zoomMap}"  type="HYBRID" style="height:500px" model="#{uniqueParcelleMB.polygonModel}"  >
+					</p:gmap>    	  
+				</h:form>
+	
+   	</b:panel>
+	</ui:define>
+	</ui:composition>

@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:gis="http://gisfaces.com"
+       xmlns:b="http://bootsfaces.net/ui"
+       xmlns:p="http://primefaces.org/ui"
+      xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/" >
+<h:head>
+ <link rel="stylesheet" href="../resources/css/menu.css"/>
+   <meta charset='utf-8'/>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+   <link rel="stylesheet" href="styles.css"/>
+    <link rel="icon" type="image/png" href="../logo/logosys.png" />
+   <script type="text/javascript" src="../lazy/jquery.lazyscript.js"></script>
+
+    <style>
+    .no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(../images/loading-animations-preloader-gifs-ui-ux-effects-10.gif) center no-repeat #fff;
+}
+  
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+  -moz-box-shadow: inset 0 1px 0 #8799a9, 0 1px 1px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset 0 1px 0 #8799a9, 0 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 0 #8799a9, 0 1px 1px rgba(0, 0, 0, 0.5);
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABNCAIAAADo7ZnJAAAAA3NCSVQICAjb4U/gAAAAUUlEQVQYlXWPyRGAMAwDd1wwHVADJS+POERk4OVD1mGO8yq1wFIKLXHsJLDGH8wSou8q0bfGxplYcpaHRerG/J/zS/edLTnrjvDo7PHv1Nhy3lZMnHg0MO2JAAAAAElFTkSuQmCC);
+  background-color: #566171;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #6e7d8f), color-stop(1, #404854));
+  background-image: -webkit-linear-gradient(top, #6e7d8f, #404854);
+  background-image: -moz-linear-gradient(top, #6e7d8f, #404854);
+  background-image: -o-linear-gradient(top, #6e7d8f, #404854);
+  background-image: linear-gradient(#6e7d8f, #404854);
+   text-align: center;
+}
+</style>
+</h:head>
+<h:body>
+
+<b:form id="formLayout">
+<div id='cssmenu' >
+<ul style="height:58px;z-index:1;">
+
+   <li>
+   <h:outputLabel value="" 
+    style="margin-top:-0px">
+
+</h:outputLabel> 
+     </li>
+
+<li class='active has-sub' style="margin-left:150px"><a href='/faces/Views/overview.xhtml'><span>Accueil</span></a></li>
+
+   
+    <h:outputFormat  value="">
+   <li class=' has-sub'><a href='#' style="color:black;font-size: 14px"><span>Producteur ▼</span></a>
+      <ul>
+     
+<h:outputFormat value="Producteur" style="text-align:center;padding-left:55px;color:white;"/>
+         <li class='has-sub'><a href="/faces/Views/prodparc.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="/faces/Views/searchproducteurs.xhtml"><span>Rechecher / Modifier</span></a></li>
+         <li class='has-sub'><a href="#"><span>Lister</span></a>
+            <ul>
+               <li><a href="/faces/Views/producteurs.xhtml"><span>Producteurs actifs</span></a></li>
+               <li class='last'><a href="/faces/Views/producteursPassif.xhtml"><span>Producteurs passifs</span></a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+   </h:outputFormat>
+<h:outputFormat value="" rendered="#{request.isUserInRole('ADMIN') || request.isUserInRole('SECRETAIRE')}">
+  
+   <li class=' has-sub'><a href='#' style="color:black;font-size: 14px"><span>Fournisseur ▼</span></a>
+      <ul>
+      <h:outputFormat value="Fournisseur" style="text-align:center;padding-left:55px;color:white;"/>
+  
+         <li class='has-sub'><a href="/faces/Views/creerfournisseur.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="/faces/Views/rechercherfournisseur.xhtml"><span>Rechecher / Modifier</span></a></li>
+         <li class='has-sub'><a href="#"><span>Lister</span></a>
+           <ul>
+               <li><a href="/faces/Views/listerfournisseur.xhtml"><span>Fournisseurs actifs</span></a></li>
+               <li class='last'><a href="/faces/Views/listerfournisseurPassif.xhtml"><span>Fournisseurs passifs</span></a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</h:outputFormat>
+
+<h:outputFormat value="" class=' has-sub '>
+  <li class=' has-sub '><a href='#' style="color:black;font-size: 14px"><span>Parcelle ▼</span></a>
+      <ul>
+      <h:outputFormat value="Parcelle" style="text-align:center;padding-left:60px;color:white;"/>
+  
+         <li class='has-sub'><a href="/faces/Views/parcelle.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="/faces/Views/modifierparcelle.xhtml"><span>Modifier</span></a></li>
+         <li class='has-sub'><a href="#"><span>Lister</span></a>
+         
+          <ul>
+               <li><a href="/faces/Views/listparcelle.xhtml"><span>Parcelles actives</span></a></li>
+               <li class='last'><a href="/faces/Views/listparcellePassif.xhtml"><span>Parcelles passives</span></a></li>
+            </ul>
+         </li>
+             
+      
+      
+      </ul>
+   </li>
+</h:outputFormat>
+
+<h:outputFormat value="" >
+  <li class=' has-sub'><a href='#' style="color:black;font-size: 14px"><span>Achat ▼</span></a>
+      <ul>
+      <h:outputFormat value="Achat" style="text-align:center;padding-left:70px;color:white;"/>
+  
+         <li class='has-sub'><a href="/faces/Views/newachat.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="#"><span>Lister</span></a>
+         
+           <ul>
+               <li><a href="/faces/Views/listeachat.xhtml"><span>Achats non livrés</span></a></li>
+               <li class='last'><a href="/faces/Views/listeachatlivre.xhtml"><span>Achats livrés</span></a></li>
+            </ul>
+         </li>
+     
+     
+      </ul>
+   </li>
+</h:outputFormat>
+
+<h:outputFormat value="" >
+  <li class=' has-sub'><a href='#' style="color:black;font-size: 14px"><span>Lot ▼</span></a>
+      <ul>
+      <h:outputFormat value="Lot" style="text-align:center;padding-left:75px;color:white;"/>
+  
+         <li class='has-sub'><a href="/faces/Views/lots.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="#"><span>Lister</span></a>
+          <ul>
+               <li><a href="/faces/Views/listlots.xhtml"><span>Lots non exportés</span></a></li>
+               <li class='last'><a href="/faces/Views/listlotsexportes.xhtml"><span>Lots exportés</span></a></li>
+            </ul>
+         </li>
+      </ul>
+   </li>
+</h:outputFormat>
+
+<h:outputFormat value="" rendered="#{request.isUserInRole('ADMIN') || request.isUserInRole('SECRETAIRE')}">
+  <li class=' has-sub'><a href='#' style="color:black;font-size: 14px"><span>Exportation ▼</span></a>
+      <ul>
+      <h:outputFormat value="Exportation" style="text-align:center;padding-left:55px;color:white;"/>
+  
+         <li class='has-sub'><a href="/faces/Views/exportation.xhtml"><span>Enregistrer</span></a></li>
+         <li class='has-sub'><a href="/faces/Views/listerExportation.xhtml"><span>Lister</span></a></li>
+      </ul>
+   </li>
+</h:outputFormat>
+
+ <h:outputFormat>
+<li class=' has-sub'>
+<span> <b:image  height='30' width='40'  value="../logo/user-icon-e1286135502728.png" name=""
+   style="padding-right:-150px;margin-top:-10px">
+  <h:outputFormat value="#{connect.nom } #{connect.prenom}" 
+  style="color:white; border-radius: 8px 8px 8px 8px;"/>
+  </b:image> 
+</span>
+</li>
+ </h:outputFormat> 
+
+  
+
+
+</ul>
+</div>
+
+
+</b:form>
+
+        <b:jumbotron >
+            <b:container >
+            
+           	 <ui:insert name="content">
+     
+           	 </ui:insert>
+            </b:container>
+        </b:jumbotron>
+        
+         <div class="footer">
+          <img src="../logo/logosys.png" height='15' width='25' />  <p style="margin:auto;color:white;color:#cb7b72;">AGRITECH-SYSTRA</p>
+            </div>
+            <script src="../Plugins/js/systra.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDdekMdCTiXLuGB3doHlz9KTke5ZFnvwrA"></script>
+ 
+</h:body>
+</html>

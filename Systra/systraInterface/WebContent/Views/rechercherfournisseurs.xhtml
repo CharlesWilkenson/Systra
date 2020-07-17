@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+<title>
+Rechercher Fournisseur
+</title>
+	<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	 <style type="text/css">
+	h3 {
+	color:gray;
+    font-family: 'Patua One';
+	text-align: center;
+	font-size: 30px;
+	margin: auto;
+	width:30%;
+	text-align:center;	
+	 margin-top:-10px;
+
+}
+label.error,
+.required {
+    font-size: 14px;
+    color: red;
+}
+.form-controls {
+    clear: both;
+}
+
+.previous-fieldset {
+	display: none;
+	float: left;
+}
+.next-fieldset {
+	float: right;
+},
+a.next-fieldset,
+a.previous-fieldset {
+	color: #ccc;
+}
+
+.clear {
+	clear: both;
+}
+.my-error-class {
+    color:#FF0000;  /* red */
+}
+.my-valid-class {
+    color:#00CC00; /* green */
+}
+		</style>
+	</h:head>
+<b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+         
+         <b:messages style="margin-left:190px;margin-right:140px;" id="messages"
+            globalOnly="true"
+            severity="error,fatal,info,warn"/>
+         
+ <h:body >    
+
+ <h3>Modifier fournisseur</h3>
+
+<b:form  horizontal="true" id="fournForm">
+<b:panel title="Fournisseur" look="primary" style="width:80%;margin:auto" >
+	
+	  
+     <f:facet name="heading"> 
+	      <b:iconAwesome name="fa-key" /> 
+      <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{connect.codeFournisseur}"  />
+ 
+   	</f:facet>
+   	<h:inputHidden value="#{connect.codeFournisseur}"  />
+    <h:inputHidden value="#{connect.fournEtat}"  />
+  
+   	<b:column >
+   	<b:well>
+   	<b:panelGrid columns="2">
+
+
+   	  <b:inputText disabled="true" label="ID"  placeholder="Code" name="fournID" id="fournID" value="#{connect.codeFournisseur}"    colMd="8" labelColMd="4">
+       
+    </b:inputText>
+    
+      <b:inputText placeholder="Nom" id="nom" name="fournNom" value="#{connect.fournNom}"  label="Nom " colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    
+    <b:inputText placeholder="Prenom" name="fournPrenom" value="#{connect.fournPrenom}"  label="Prenom " colMd="8" labelColMd="4">
+  
+    </b:inputText>
+    <b:inputText placeholder="CIN/NIF" name="fournNif" value="#{connect.fournNif}"  label="CIN/NIF" colMd="8" labelColMd="4">
+        
+    </b:inputText>
+    <b:inputText placeholder="Addresse" name="fournAdresse" value="#{connect.founAdresse}"   label="Addresse " colMd="8" labelColMd="4">
+      
+    </b:inputText>
+    <b:inputText placeholder="Telephone" name="fournTel" value="#{connect.fournTel}" mask="9999-9999"  label="Telephone" colMd="8" labelColMd="4">
+
+    </b:inputText>
+    <b:inputText placeholder="Email" name="fournEmail" value="#{connect.fournEmail}"   label="Email" colMd="8" labelColMd="4">
+    
+    </b:inputText>
+    <b:inputText placeholder="Usine" name="fournUsine" value="#{connect.fournUsine}"   label="Usine" colMd="8" labelColMd="4">       
+    </b:inputText> 
+    
+
+    
+  
+    
+    </b:panelGrid></b:well>
+    		      <b:buttonGroup>
+<b:commandButton  value="Modifiier" rendered="#{connect.fournEtat=='Actif' and request.isUserInRole('ADMIN')}" icon-awesome="fa-edit" size="md"  action="#{fournisseurMB.update()}" look="primary" />   
+       
+      
+            
+             <b:commandButton update="fournForm,messages,growl" value="Desactiver" rendered="#{connect.fournEtat=='Actif' and request.isUserInRole('ADMIN')}" icon="remove" look="primary" tooltip="Desactiver" size="md" >
+           <f:ajax execute="@form" listener="#{fournisseurMB.desActiverfou()}" ></f:ajax>
+            </b:commandButton>
+            
+            <b:commandButton update="fournForm,messages,growl" value="Reactiver" rendered="#{connect.fournEtat=='Passif' and request.isUserInRole('ADMIN')}" look="primary"   tooltip="Activer" size="md" >
+<f:ajax execute="@form" listener="#{fournisseurMB.Activerfou()}" ></f:ajax>
+            </b:commandButton></b:buttonGroup>
+    </b:column>
+
+
+	</b:panel>
+
+	 </b:form>
+   	<script type="text/javascript" src="../validation/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="../validation/jquery.validate.js"></script>
+<script type="text/javascript" src="../validation/valid.js"/>
+</h:body>
+   	
+</ui:define>
+</ui:composition>

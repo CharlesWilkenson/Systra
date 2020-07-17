@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+	<h:head>
+	<title>
+Dashboard
+</title>
+<link rel="icon" type="image/png" href="../images/logosys.png" />
+	<!--  	 <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	  -->
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title>Pushy - Off-Canvas Navigation Menu</title>
+        <meta name="description" content="Pushy is an off-canvas navigation menu for your website."/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
+        <link rel="stylesheet" href="../dashboard/css/normalize.css"/>
+        <link rel="stylesheet" href="../dashboard/css/demo.css"/>
+        <!-- Pushy CSS -->
+        <link rel="stylesheet" href="../dashboard/css/pushy.css"/>
+       <!-- jQuery -->
+       <link rel="stylesheet" href="../notification/notification.css"/>
+          <script type="text/javascript" src="../notification/notification.js"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+ <script type="text/javascript" src="../scscrollbar.js"></script>
+<link rel="stylesheet" href="../scrollbar/scrollbar.css"/>
+<!--      
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+ -->
+ <style type="text/css">
+	h2 {
+	color:blue;
+	font-family: 'Patua One';
+	text-align: center;
+	font-size:50px;
+	margin: 10px 0 0;
+	padding: 0;
+}
+
+
+</style>
+
+<style type="text/css">
+.table{
+
+   
+}
+</style>
+
+<style type="text/css">
+
+#nav{list-style:none;margin: 0px;padding: 0px;}
+#nav li {
+float: left;
+margin-right: 40px;
+font-size: 14px;
+font-weight:bold;
+  text-align: left;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  position: absolute;
+}
+#nav li a{color:#333333;text-decoration:none}
+#nav li a:hover{color:#006699;text-decoration:none}
+#notification_li{position:relative}
+
+#notificationContainer {
+background-color: #fff;
+border: 1px solid rgba(100, 100, 100, .4);
+-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+overflow: visible;
+position: absolute;
+top: -230px;
+margin-left: -50px;
+width: 430px;
+z-index: -1;
+display: none;
+}
+#notificationContainer:before {
+content: 'd';
+display: block;
+position: absolute;
+width: 0;
+height: 0;
+color: transparent;
+border: 10px solid black;
+border-color: transparent transparent white;
+margin-top: -20px;
+margin-left: 98px;
+position: absolute;
+z-index: 1;
+}
+.notificationTitle {
+z-index: 1000;
+font-weight: bold;
+padding: 8px;
+font-size: 13px;
+background-color: #ffffff;
+width: 384px;
+border-bottom: 1px solid #dddddd;
+
+}
+#notificationsBody {
+padding: 20px /* droite */-120px  20px /* gauche */2px !important; 
+height: 270px;
+max-width:170%;
+text-align:left;	
+background-color: white;	
+										  
+}
+#notificationFooter {
+background-color: white;
+text-align: center;
+font-weight: bold;
+padding: 18px;
+font-size: 12px;
+border-top: 1px solid #dddddd;
+}
+#notification_count {
+padding: 3px 7px 3px 7px;
+background: #cc0000;
+color: #ffffff;
+font-weight: bold;
+margin-left:15px;
+border-radius: 9px;
+position: absolute;
+margin-top:-300px;
+font-size: 11px;
+}
+</style>
+
+
+	</h:head>
+	
+
+	
+<h:body onload="clear()">
+        <b:container fluid="true">
+      
+            <b:row>
+    <!-- Pushy Menu -->
+        <nav class="pushy pushy-left" data-focus="#first-link" >
+            <div class="pushy-content" >
+                <ul >
+               <li class="pushy-link" style="font-size:13px;background-color:#c46a60;font-family: 'Patua One', cursive;">
+                 <a href="#" style="color:white">AGRITECH-SYSTRA</a></li>
+                 
+                 
+           <li class="pushy-link" ><span><a href="/faces/Views/overview.xhtml" >
+           <i class="glyphicon glyphicon-home" style="font-size:25px;margin-left:-20px;color:white;"/>Accueil</a></span></li>
+ 
+                         <li class="pushy-submenu" >
+                        <button><i class="fa fa-envelope-o" style="font-size:25px;margin-left:-20px;color:white;"/>Message</button>
+                        <ul>
+                           <!--  <li class="pushy-link"><a href="#"><i class="fa fa-envelope-o" style="font-size:15px"/>Message non lu</a></li>
+                             --><li class="pushy-link"><a href="/faces/Views/MessageLu.xhtml">
+                            <i class="fa fa-envelope-open" style="font-size:15px;color:white;"/>Message lu</a></li>
+                           
+                        
+                           
+                        </ul>
+                    </li>
+                 
+                 <h:outputFormat value="" rendered="#{request.isUserInRole('ADMIN') || request.isUserInRole('SECRETAIRE')}">
+  
+                    <li class="pushy-submenu">
+                        <button><i class="fa fa-file-text-o" style="font-size:25px;margin-left:-20px;color:white;"/>Rapport</button>
+                        <ul>
+                            <li class="pushy-link"><a href="/faces/Views/rapportachat.xhtml"><i class="fa fa-shopping-cart" style="font-size:24px;color:white;"/>Achat</a></li>
+                            <li class="pushy-link"><a href="/faces/Views/rapportlot.xhtml">
+                            <i class="fa fa-codepen" style="font-size:15px;color:white;"/>Lot</a></li>
+                            <li class="pushy-link"><a href="/faces/Views/rapportexpo.xhtml">
+                            <i class="glyphicon glyphicon-export" style="font-size:15px;color:white;"/>Exportation</a></li>
+                        </ul>
+                    </li>
+                    
+                    </h:outputFormat>
+             <li class="pushy-link"><a href="/faces/Views/layerparcelle.xhtml"><i class="glyphicon glyphicon-globe" style="font-size:25px;margin-left:-20px;color:white;"/>Localisation</a></li>
+                   
+                   <h:outputFormat value="" rendered="#{request.isUserInRole('ADMIN')}">
+  
+                    <li class="pushy-submenu">
+                        <button><i class="fa fa-users" style="font-size:25px;margin-left:-25px;color:white;"/>Administration</button>
+                        <ul>
+                            <li class="pushy-link"><a  href="/faces/PageAdmin/User.xhtml"><i class="fa fa-user-plus" style="font-size:15px;margin-left:-25px;color:white;"/>Nouvel utilisateur</a></li>
+                            <li class="pushy-link" style="font-size:15px;margin-left:-25px"><a href="/faces/PageAdmin/admin.xhtml">Panel administratif</a></li>
+                          
+                        </ul>
+                    </li>
+                    </h:outputFormat>
+                    
+                  <li class="pushy-link"><a href="/faces/Views/ChangePassword.xhtml"><i class="fa fa-key" style="font-size:25px;margin-left:-20px;color:white;"/>Changer password</a></li>
+               
+         
+                </ul>
+                
+            </div>
+                 <b:form>
+                 <li  class="pushy-link"><a href="#" style="margin-bottom:-110px"><b:commandButton icon-awesome="fa-power-off" style="font-size:15px;" action="#{connect.logout()}" size="sm" value="Deconnexion"/></a></li>
+                   </b:form>
+               
+        </nav>
+  
+         <!-- Your Content -->
+        <div id="container">
+            <!-- Menu Button -->
+            <button style="background-color: #566171;" class="menu-btn">
+            <i class="fa fa-navicon" style="font-size:24px;padding-left: 5px;"/></button>
+
+        </div>
+
+    <!-- Pushy JS -->
+        <script src="../dashboard/js/pushy.min.js"></script>
+ 
+
+
+ 
+
+ <b:image  id="notificationLink" height='40' width='55' 
+ style="cursor:pointer;margin-left:-15px;
+ margin-top:-520px;z-index: 1;position: relative;"
+  value="../logo/mac_notification.png" name="">
+
+<div >
+
+<ul id="nav">
+
+<li id="notification_li" >
+<h:outputFormat value="" rendered="#{messageMB.listerMessagesNonLu().size()>0}">
+<span id="notification_count">
+<h:outputText value="#{messageMB.listerMessagesNonLu().size()}"></h:outputText>
+</span>
+</h:outputFormat>
+
+<div id="notificationContainer" >
+<div class="notificationTitle">
+<h:outputFormat style="color:#6495ed;" rendered="#{messageMB.listerMessagesNonLu().size()==1}" value="Vous avez #{messageMB.listerMessagesNonLu().size()} nouveau message"/>
+<h:outputFormat style="color:#6495ed;" rendered="#{messageMB.listerMessagesNonLu().size()>1}" value="Vous avez #{messageMB.listerMessagesNonLu().size()} nouveaux messages"/>
+<h:outputFormat style="color:#6495ed;" rendered="#{messageMB.listerMessagesNonLu().size()==0}" value="Vous n'avez pas de nouveau message"/>
+
+</div>
+
+
+<b:form >
+<div id="wrapper">
+  <div class="scrollbar" id="style-11">
+  <div class="force-overflow">
+<div id="notificationsBody" >
+
+<h:dataTable rendered="#{messageMB.listerMessagesNonLu().size()>0}"   class="table" value="#{messageMB.listerMessagesNonLu()}" var="msg"  
+>
+<h:column >
+
+
+<h:outputFormat 
+style="background-color:#f0f8ff;border-bottom: 1px solid #dddddd;
+color:#4169e1;border-radius:10px;">
+
+<span ><b:image  height='15' width='25' 
+  value="../logo/images (7).jpg" name="" style="padding-left:-110;postion:relative; z-index: 1;"></b:image></span>
+<h:outputText value="#{msg.nomComplet} envoyé le #{msg.date}" 
+style="font-size:12px;color:#AAAAAA;border-radius:10px"></h:outputText>
+<f:param name="idmsg" value="#{msg.id}"></f:param> 
+
+</h:outputFormat>
+
+</h:column>
+
+ <h:column >
+ <h:commandLink rendered="#{request.isUserInRole('ADMIN')}" action="#{messageMB.redirect1()}"
+ style="text-align:right" size="sm">
+<b:iconAwesome tooltip="Voir" tooltip-position="bottom" name="search" size="lg" style="color:#0074D9"/>
+<f:param name="idmsg" value="#{msg.id}"></f:param>
+</h:commandLink> 
+</h:column> 
+</h:dataTable>
+
+</div>
+
+</div></div></div>
+<div id="notificationFooter">
+ 
+<h:commandLink  style="color:#6495ed;margin-bottom:5px" action="MessageLu.xhtml?faces-redirect=true" >
+
+<b:image  height='30' width='40' 
+  value="../logo/images (6).jpg" name=""></b:image>
+</h:commandLink>
+</div>
+</b:form>
+</div>
+
+</li>
+
+</ul>
+
+</div></b:image>
+
+
+       <b:column  style="padding-left:-150px;margin-top:-160px;width:100%;border-radius:25px;"    styleClass="main">
+                    
+                     <b:container>
+       <ui:insert name="contentdashboard2" style="padding-left:-150px;margin-top:-190px;width:100%;"/>
+                     
+                </b:container>
+                </b:column>
+           
+
+            </b:row>
+        </b:container> 
+       
+       <script type="text/javascript">
+function logout(){
+	Document().getElementById("#close:button").clik();
+}
+ 
+       </script>
+       
+   		<h:form id="close">
+   		<h:commandButton style="display:none" id="button" action="#{connect.logout()}"  > 
+   		
+   		</h:commandButton> 		
+   		</h:form>
+        
+
+        </h:body>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+
+	
+
+  <h:head>
+  <title>
+Exportation
+</title>
+	 <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+  
+	<b:messages id="messages"
+            globalOnly="true"
+            severity="error,fatal"/>
+    <b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+
+
+  <h:body >
+<h3 style="margin-left:530px;margin-top:-30px">
+            <img alt="hola" src="../logo/usaExport.jpg" height="60" width="90"/>
+           </h3>
+   	 <b:form inline="true" id="form"> 
+   <b:panel style="width:50%;margin:auto" >
+		<f:facet name="heading">
+   	</f:facet>
+ 	     
+   	     <b:column>
+
+  	    <img alt="hola" src="../logo/emballage.jpg" height="50" width="50"/>	     
+	     <b:selectOneMenu id="lot" value="#{exportationMB.idLot}"  colMd="4" labelColMd="2" >
+			   
+			    <f:selectItems var="item" value="#{exportationMB.listerIdLots()}" itemValue="#{item.key}" itemLabel="#{item.key}"/>
+			     <f:facet name="append">
+           		 <b:commandButton disabled="#{lotsMB.disableButton}" update="form" look="primary" iconAwesome="add" icon-align="right" > 
+           		 <b:badge style="margin-left:10px; background-color:#5cb85c" value="#{exportationMB.listerIdLots().size()}" />
+     	 <f:ajax execute="@form" listener="#{exportationMB.rechercherLot()}" ></f:ajax>    
+                 </b:commandButton>
+       			 </f:facet>       	
+       			</b:selectOneMenu> 
+			    
+  			  
+  			  
+  			    <b:column>
+  			    <b:well >
+	     <b:panelGrid columns="2"  >
+			 <b:inputText id="qt" value="#{exportationMB.qtt_aprescontrole}"  required="true" label="Quantite" disabled="true" mask="integer"  colMd="8" labelColMd="4"/> 
+    		<b:inputText id="pt"  placeholder="Prix lot" value="#{exportationMB.prix}" required="true" label="Prix (gdes)" disabled="#{exportationMB.disablefield}" mask="decimal"  colMd="8" labelColMd="4"/>   		
+		
+	
+		  </b:panelGrid >
+		  
+		  	  	 <b:commandButton offset="2" look="primary" value="Ajouter lot" update="messages,form,form1" icon="add"   colMd="8" style="margin-bottpm:35px" disabled="#{exportationMB.disablefield}" >
+		 <f:ajax execute="@form" listener="#{exportationMB.ajouter()}"  ></f:ajax>
+		</b:commandButton>
+		  </b:well>
+	
+		  </b:column>
+	
+
+  			  </b:column>
+			</b:panel>
+			<h:inputHidden value="#{exportationMB.qtt_aprescontrole}" />
+   <h:inputHidden   placeholder="Valeur exportee" value="#{exportationMB.lotPrix}" label="Prix total"  />
+
+
+
+
+
+ <b:panel>       
+     <f:facet name="heading">
+	 <b:badge style="margin-left:10px; background-color:#5cb85c" value=" #{exportationMB.map.size()} " />
+        <img alt="hola" src="../logo/emballage.jpg" height="30" width="40"/>
+        </f:facet>
+
+		 <b:dataTable value="#{exportationMB.listerExpo()}" var="item">
+		 <b:dataTableColumn value="#{item.key}" label="Code lot"/>
+         <b:dataTableColumn value="#{item.value.prixLot_expo}" label="Prix"/>
+         <b:dataTableColumn value="#{item.value.qtt_exp}" label="Quantite"/>
+         <b:dataTableColumn label="Action">
+            <b:commandButton action="#{exportationMB.editer()}" value="Editer" icon="edit" 
+                 update="form,form1" size="sm" style="margin-right:7px" look="primary">
+                <f:param name="codeLot" value="#{item.value.idLot.lotid}"></f:param>
+                <f:param name="codeExpo" value="#{item.key}"></f:param>
+                <f:ajax execute="@form" listener="#{exportationMB.editer()}" ></f:ajax>
+            </b:commandButton>
+           
+            <b:commandButton  value="delete" icon="remove" update="form,form1" look="primary"
+               size="sm">
+               <f:param name="codeLot" value="#{item.value.idLot.lotid}"></f:param>
+                 <f:param name="codeExpo" value="#{item.key}"></f:param>
+                 <f:ajax execute="@form" listener="#{exportationMB.delete()}" ></f:ajax>
+            </b:commandButton>
+       </b:dataTableColumn>
+   	 </b:dataTable>
+   	 
+   	  <b:dataTable rendered="false" value="#{exportationMB.listerLot()}" var="item">
+         <b:dataTableColumn value="#{item.key}" label="Id Lot"/>
+         <b:dataTableColumn value="#{item.value.lotqttTotapc}" label="Quantite"/>
+         <b:dataTableColumn label="Action">
+            
+       </b:dataTableColumn>
+   	 </b:dataTable>
+</b:panel>
+   	 </b:form>
+		
+		
+		<b:form id="form1">
+        <b:well>
+    		<b:panelGrid columns="4" style="margin-bottom:10px" >
+          <b:inputText value="#{exportationMB.client}" placeholder="Client" label="Client"   disabled="#{exportationMB.disablefieldII}" /> 
+           <b:datepicker id="datepickerachat" value="#{exportationMB.date_export}" label="Date Exportation"  />
+           
+		    <b:inputText  value="#{exportationMB.qtt_exporter}" label="Quantite Exporter"  disabled="true" />
+		    <b:inputText  value="#{exportationMB.prixtotal_export}" label="Prix total"  disabled="true" />
+		    </b:panelGrid>
+		    </b:well>
+		     <b:commandButton look="primary" update="messages,form1,form" value="Vider" icon="trash" ajax="true"
+                 style="margin-left:7px" disabled="#{exportationMB.disablefieldII}">
+                 <f:ajax execute="@form" listener="#{exportationMB.vider()}"></f:ajax>
+                 </b:commandButton>
+		    
+		     <b:commandButton  look="primary" update="messages,growl,form1,form"
+		      value="Enregistrer" icon="save" ajax="true"
+              style="margin-left:7px" disabled="#{exportationMB.disablefieldII}">
+               <f:ajax execute="@form" listener="#{exportationMB.addExportation()}" ></f:ajax>
+                </b:commandButton>
+                		     
+		     </b:form>	
+
+             </h:body>     
+  </ui:define>
+  
+  </ui:composition>
+

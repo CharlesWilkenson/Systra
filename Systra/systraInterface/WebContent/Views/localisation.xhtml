@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+	<h:head>
+	<title>
+Localisation
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+	<b:messages id="messages"
+            globalOnly="true"
+            severity="error,fatal"/>
+<b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+	<b:panel collapsible="false">
+   <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputText value="Localisation" />
+     
+   	</f:facet>
+   	<b:tabView contentStyle="border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px">
+     <b:tab title="Commune">
+     <b:panel >
+       <b:button value="Add commune" look="primary" icon-awesome="fa-user-plus" onclick="$('.modalcommune').modal()" size="Md"/>
+		        <hr/>
+     <b:form id="communeform">
+		   	 <b:column span="12">
+			<b:dataTable id="table_fourn" value="" var="item" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                 <b:dataTableColumn value="" label="ID"/>
+                 <b:dataTableColumn value="" label="Role" />
+               <b:dataTableColumn value="" label="Desciption" />
+			   <b:dataTableColumn value="" label="User Count"/>
+			   <b:dataTableColumn  label="Action">
+			   <b:commandButton look="primary"  icon="search" value="View" size="sm">
+            </b:commandButton>
+            
+			   </b:dataTableColumn>
+			</b:dataTable>
+			
+			</b:column>
+		   	</b:form>
+     </b:panel>
+     </b:tab>
+     
+     
+     <b:tab title="Zone">
+     <b:panel >
+     <b:form id="zoneform">
+		   	 <b:column span="12">
+			<b:dataTable id="table_fourn" value="" var="item" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                 <b:dataTableColumn value="" label="ID"/>
+                 <b:dataTableColumn value="" label="Role" />
+               <b:dataTableColumn value="" label="Desciption" />
+			   <b:dataTableColumn value="" label="User Count"/>
+			   <b:dataTableColumn  label="Action">
+			   <b:commandButton look="primary"  icon="search" value="View" size="sm">
+            </b:commandButton>
+            
+			   </b:dataTableColumn>
+			</b:dataTable>
+			
+			</b:column>
+		   	</b:form>
+     </b:panel>
+     </b:tab>
+     
+     <b:tab title="Region">
+     <b:panel >
+     <b:form id="regionform">
+		   	 <b:column span="12">
+			<b:dataTable id="table_fourn" value="" var="item" excel="true"
+                 csv="true"
+                 pdf="true"
+                 copy="true"
+                 print="true">
+                 <b:dataTableColumn value="" label="ID"/>
+                 <b:dataTableColumn value="" label="Role" />
+               <b:dataTableColumn value="" label="Desciption" />
+			   <b:dataTableColumn value="" label="User Count"/>
+			   <b:dataTableColumn  label="Action">
+			   <b:commandButton look="primary"  icon="search" value="View" size="sm">
+            </b:commandButton>
+            
+			   </b:dataTableColumn>
+			</b:dataTable>
+			
+			</b:column>
+		   	</b:form>
+     
+     </b:panel>
+     </b:tab>
+     
+     </b:tabView>
+     </b:panel>
+	
+	<b:form id="formuser" horizontal="true">
+   	<b:modal id="amodal" title="User Information"  styleClass="modalcommune" >
+    <b:well >
+    <b:inputText value="" placeholder="Email" required="true" label="Email" colMd="10" labelColSm="2"/>
+    <b:inputText value="" placeholder="Pseudo" required="true" label="Pseudo" colMd="10" labelColSm="2"/>
+    <b:selectOneMenu value="" required="true" label="Role" colMd="10" labelColSm="2">
+    <f:selectItem itemLabel="Select role"  />
+    <f:selectItems var="item" value="" itemLabel="" itemValue="" />
+    </b:selectOneMenu>
+   	<b:commandButton  value="Save"  look="primary" style="margin-right:7px"/>
+   	<b:commandButton  value="Cancel" style="margin-left:5px"/>
+	
+    </b:well>
+   	</b:modal> 
+   	</b:form>
+	</ui:define>
+	</ui:composition>

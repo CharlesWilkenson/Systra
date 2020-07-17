@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/dashboards.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="contentdashboard2">
+<h:head>
+	<title>Ajouter parcelle</title>
+	<link rel="icon" type="image/png" href="../logo/logosys.png" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'/>
+ 	 <link rel="stylesheet" type="text/css" href="../resources/css/carousel.css" />
+ <link rel="icon" type="image/png" href="../logo/logosys.png" />
+  <link rel="stylesheet" type="text/css" href="../resources/css/styletext.css" />
+
+</h:head>
+
+<b:growl id="growl"
+         globalOnly="true"
+         showDetail="true"
+         severity="info,warn"/>
+         
+         	
+         	<b:messages id="messages" style="margin-left:50px;margin-right:50px;"
+            globalOnly="true"
+            severity="error,fatal,info,warn"  />
+<h:body>
+
+	<h3>Nouvelle Parcelle</h3>
+
+
+
+
+<section id="wrapper" style="margin-top:50px;width:90%;margin: auto">
+	<b:form class="testform" id="testform" method="post" horizontal="true">
+	 <b:formGroup id="demoWrapper">
+	 		<fieldset >
+				<b:panel   style="size:200px" look="primary" >
+                    	            <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputFormat style="color:white;margin:auto;font-size: 20px;font-family: 'Patua One', cursive;" value="Identification" />
+	</f:facet>
+           <b:column >
+            <b:progressBar renderCaption="false" animated="true" value="20" min="0" max="100" tooltip="Identification" severity="info" visible="md..." />
+ 
+           
+           <b:well >
+<b:panelGrid columns="2">
+			
+			<b:inputText colMd="8" labelColMd="4" label="Code prod"  placeholder="Code producteur" name="prodID" id="prodID"  disabled="true" required-message="Champ null" value="#{connect.codeProd}" >
+    	</b:inputText> 
+    			
+				<b:inputText colMd="8" labelColMd="4" label="Nom complet"  placeholder="Nom Complet" name="nom" id="nom"  disabled="true" required-message="Champ null" value="#{connect.prodNom}" >
+    	</b:inputText> 
+	           	   
+	           	 
+                 
+                 
+                 	<b:inputText label="Sexe" disabled="true" colMd="8" labelColMd="4" placeholder="Sexe"  required-message="Champ null" value="#{connect.prodSexe}"  >
+    	</b:inputText>
+
+            
+       
+            <b:inputText label="Telephone" colMd="8" labelColMd="4" placeholder="Telephone" disabled="true" id="tel" name="tel" value="#{connect.prodTel}"   mask="9999-9999">
+       
+    	</b:inputText>      
+	           	 
+	           	 
+	           	 <b:inputText label="Code MARNDR" placeholder="Code MARNDR" colMd="8" labelColMd="4" value="#{parcelleMB.parcMarndr}"  >
+    			</b:inputText> 
+    			
+    			
+     </b:panelGrid></b:well></b:column></b:panel>
+
+			</fieldset>
+
+			<fieldset >
+					<b:panel  style="size:200px" look="primary">
+					 	            <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputFormat  value="Localisation" style="color:white;margin:auto;font-size: 20px;font-family: 'Patua One', cursive;"/>
+	</f:facet>
+	                 <b:column >
+	                 <b:progressBar  renderCaption="false" animated="true" value="40" min="0" max="100" tooltip="Localisation" severity="info" visible="md..." />
+	                 
+	                 <b:well >
+                     <b:panelGrid columns="2">
+		                                 		
+		                                 	
+						
+                            <b:selectOneMenu label="Departement"  colMd="8" labelColMd="4" id="depart" value="#{parcelleMB.parcDepartement}" update="commune" >
+				    <f:selectItem  itemLabel="" itemValue="" /> 
+				       <f:selectItem  itemLabel="OUEST" itemValue="392" />  
+				  <f:selectItem  itemLabel="SUD-EST" itemValue="393" /> 
+				  <f:selectItem  itemLabel="NORD" itemValue="394" />
+				  <f:selectItem  itemLabel="NORD-EST" itemValue="395" />
+				  <f:selectItem  itemLabel="ARTIBONITE" itemValue="396" />
+				  <f:selectItem  itemLabel="CENTRE" itemValue="397" />
+				  <f:selectItem  itemLabel="SUD" itemValue="398" />
+				  <f:selectItem  itemLabel="GRANDE-ANSE" itemValue="399" />  
+				  <f:selectItem  itemLabel="NORD-OUEST" itemValue="400" />
+				  <f:selectItem  itemLabel="NIPPES itemValue" itemValue="401" />    
+				  <f:ajax  listener="#{parcelleMB.listCommunebydept}" />	<f:ajax  listener="#{parcelleMB.listCommunebydept}" />				 
+				    </b:selectOneMenu>
+        		
+        		
+        
+                             <b:inputText colMd="8" labelColMd="4" class="form-control" label="Superficie" mask="decimal" placeholder="Superficie" name="superficie" value="#{parcelleMB.parcSuperficie}" >
+    			</b:inputText>
+				   
+			
+	           	 <b:selectOneMenu id="commune" colMd="8" labelColMd="4" label="Commune" class="form-control" name="commune" value="#{parcelleMB.parcCommune}" onselect="#{parcelleMB.searchSectionbycom()}" update="localite">
+				     <f:selectItems var="item" value="#{parcelleMB.listCommunebydept()}" itemLabel="#{item.nomCommune}" itemValue="#{item.idCommune}" />
+					<f:ajax render="localite" execute="@form" />
+				    </b:selectOneMenu>		    
+				    
+									
+	           	 <b:inputText label="Latitude1" colMd="8" labelColMd="4" placeholder="Latitude 1" name="lat1" mask="decimal" value="#{parcelleMB.parcPointLatitude1}"  >
+	           	</b:inputText>
+    			 	
+					
+    			 
+	           	 <b:selectOneMenu colMd="8" labelColMd="4" label="Section Comm." class="form-control"  id="localite" name="sectionCom" value="#{parcelleMB.parcSectioncommunale}" >
+				     <f:selectItems var="item" value="#{parcelleMB.searchSectionbycom()}" itemLabel="#{item.nomSectionCommunal}" itemValue="#{item.sectionCommunal}" />
+				    </b:selectOneMenu>
+    			 
+    									
+	           	 <b:inputText colMd="8" labelColMd="4" label="Longitude 1" placeholder="Longitude 1" name="long1" mask="decimal" value="#{parcelleMB.parcPointLongitude1}" >
+    			</b:inputText>
+						
+		
+	           	 <b:inputText colMd="8" labelColMd="4" class="form-control" label="Localite" placeholder="Localite" name="localite" value="#{parcelleMB.parcLocalite}" >
+    			</b:inputText>
+							
+								</b:panelGrid></b:well></b:column></b:panel></fieldset>
+
+			<fieldset class="message-details">
+					<b:panel  style="size:200px" look="primary">
+					 	            <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputFormat  value="Preparation" style="color:white;margin:auto;font-size: 20px;font-family: 'Patua One', cursive;"/>
+	</f:facet>
+						        <b:column >
+						     <b:progressBar renderCaption="false" animated="true" value="60" min="0" max="100" tooltip="Preparation" severity="info" visible="md..." />
+     
+						        <b:well >
+                     <b:panelGrid columns="2">
+							     		
+            <b:selectOneMenu id="regf" value="#{parcelleMB.parcRegimeFoncier}" colMd="8" labelColMd="4" label="Regime Foncier">
+               <f:selectItem itemLabel="Propietaire" itemValue="Propietaire" />
+                <f:selectItem itemLabel="Deux moities" itemValue="Deux moities" />
+                <f:selectItem itemLabel="Fermier de l etat" itemValue="Fermier de l etat" />
+                <f:selectItem itemLabel="Affermage" itemValue="Affermage" />
+                <f:selectItem itemLabel="Heritage" itemValue="Heritage" />
+            </b:selectOneMenu>
+            
+          
+            <b:selectOneMenu id="typc" value="#{parcelleMB.parcTypeCulture}" colMd="8" labelColMd="4" label="Type culture">
+               <f:selectItem itemLabel="Associe" itemValue="Associe" />
+                <f:selectItem itemLabel="Verge" itemValue="Verge" />
+            </b:selectOneMenu>
+            
+            
+                   
+            <b:selectOneMenu id="fertc" value="#{parcelleMB.parcFertilisationChimique}" colMd="8" labelColMd="4" label="Fertilisation chimique">
+               <f:selectItem itemLabel="Oui" itemValue="Oui" />
+                <f:selectItem itemLabel="Non" itemValue="Non" />
+            </b:selectOneMenu>
+            
+            
+            <b:selectOneMenu id="ferto" value="#{parcelleMB.parcFertilisationOrganique}" colMd="8" labelColMd="4" label="fertilisation organique">
+               <f:selectItem itemLabel="Oui" itemValue="Oui" />
+                <f:selectItem itemLabel="Non" itemValue="Non" />
+            </b:selectOneMenu>
+            
+            
+          
+            <b:selectOneMenu id="parcir" value="#{parcelleMB.parcParcIrrigue}" colMd="8" labelColMd="4" label="Parcelle irriguee">
+                <f:selectItem itemLabel="Oui" itemValue="Oui" />
+                <f:selectItem itemLabel="Non" itemValue="Non" />
+            </b:selectOneMenu>
+            
+            
+          
+            <b:selectOneMenu id="typeau" value="#{parcelleMB.parcTypeEau}" label="Type d'eau" colMd="8" labelColMd="4">
+                <f:selectItem itemLabel="Puits" itemValue="Puits" />
+                <f:selectItem itemLabel="Riviere" itemValue="Riviere" />
+                <f:selectItem itemLabel="Precipitation" itemValue="Precipitation" />
+            </b:selectOneMenu>
+              </b:panelGrid>
+		       </b:well>   </b:column>  
+          </b:panel>
+        	</fieldset>
+        	
+        	<fieldset>
+        	
+        	<b:panel style="size:200px" look="primary">
+             	 	            <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputFormat  value="Risque" style="color:white;margin:auto;font-size: 20px;font-family: 'Patua One', cursive;"/>
+	</f:facet>
+        	<b:column>
+        	<b:progressBar renderCaption="false" animated="true" value="80" min="0" max="100" tooltip="Risque" severity="info" visible="md..." />
+ 
+        	<b:well >
+		    <b:panelGrid columns="2" >
+		                        
+								
+				            <b:selectOneMenu value="#{parcelleMB.parcPresenceElevage}" label="Presence evlevage" colMd="8" labelColMd="4">
+				               <f:selectItem itemLabel="Oui" itemValue="Oui" />
+				                <f:selectItem itemLabel="Non" itemValue="Non" />
+				            </b:selectOneMenu>
+				            
+				            
+							<b:selectOneMenu label="Type elevage" colMd="8" labelColMd="4" value="#{parcelleMB.parcTypeElevage}"  >
+				                <f:selectItem itemLabel="Libre" itemValue="Libre" />
+				                <f:selectItem itemLabel="A la corde" itemValue="A la corde" />
+				            </b:selectOneMenu>
+				     
+						
+						
+				            <b:selectOneMenu colMd="8" labelColMd="4" label="Presence latrine"  value="#{parcelleMB.parcPresenceLatrine}" >
+				                <f:selectItem itemLabel="Oui" itemValue="Oui" />
+				                <f:selectItem itemLabel="Non" itemValue="Non" />
+				            </b:selectOneMenu>
+				       
+								
+				             <b:selectOneMenu label="Plante haute" colMd="8" labelColMd="4" class="form-control"  value="#{parcelleMB.parcPlanteHote}" >
+				               <f:selectItem itemLabel="Oui" itemValue="Oui" />
+				                <f:selectItem itemLabel="Non" itemValue="Non" />
+				            </b:selectOneMenu>
+				           
+				            
+			  
+							
+				          
+				
+					
+				            <b:selectOneMenu label="Traitement phytosanitaire" colMd="8" labelColMd="4"  value="#{parcelleMB.parcTypeTraitrementPhytosanitaire}" >
+				               <f:selectItem itemLabel="Insecticides" itemValue="Insecticides" />
+				                <f:selectItem itemLabel="Pesticides" itemValue="Pesticides" />
+				                <f:selectItem itemLabel="Pas de traitement" itemValue="Pas de traitement" />
+				            </b:selectOneMenu>
+				         
+				            
+				            
+				            <b:selectOneMenu label="Probleme inondation" colMd="8" labelColMd="4" value="#{parcelleMB.parcProblemeInondation}" >
+				               <f:selectItem itemLabel="Oui" itemValue="Oui" />
+				                <f:selectItem itemLabel="Non" itemValue="Non" />
+				            </b:selectOneMenu>
+				       
+				            
+				            <b:selectOneMenu label="Frequence innondation" colMd="8" labelColMd="4"  value="#{parcelleMB.parcFrequenceInondation}"  >
+				                <f:selectItem itemLabel="1 fois/an" itemValue="1 fois/an" />
+				                <f:selectItem itemLabel="2 fois/an" itemValue="2 fois/an" />
+				                <f:selectItem itemLabel="3 fois/an" itemValue="3 fois/an" />
+				                <f:selectItem itemLabel="Plus que 3 fois/an" itemValue="Plus que 3 fois/an" />
+				            </b:selectOneMenu>
+				            </b:panelGrid>
+				       </b:well>   </b:column>
+				          </b:panel>
+        </fieldset>
+        	
+        	
+        	<fieldset>
+        	
+        	<b:panel  style="size:200px" look="primary">
+        	 	            <f:facet name="heading">
+     <i style="padding-right:20px" /> <h:outputFormat  value="Production" style="color:white;margin:auto;font-size: 20px;font-family: 'Patua One', cursive;"/>
+	</f:facet>
+        	<b:column>
+        	<b:progressBar renderCaption="false" animated="false" value="100" min="0" max="100" tooltip="Production" severity="info" visible="md..." />
+ 
+        	<b:well >
+        	<b:panelGrid columns="2" >
+		              
+			           	 <b:inputText label="Age plantation" class="form-control" colMd="8" labelColMd="4" name="agePlant" placeholder="Age plantation" mask="integer" value="#{parcelleMB.parcAgePlantation}" >
+			           	</b:inputText>
+   			
+   			
+								
+			           	 <b:inputText label="Manguier sur la parcelle" class="form-control" colMd="8" labelColMd="4" name="manguierSP" placeholder="Manguier sur la parcelle" mask="integer" value="#{parcelleMB.parcNbreManguier}"  >
+			           	</b:inputText>
+				   
+			           	 <b:inputText label="Manguier en Production" class="form-control"  name="manguierEP" colMd="8" labelColMd="4" placeholder="Manguier en Production" mask="integer" value="#{parcelleMB.parcNbreManguierEnProduction}"  >
+			           	</b:inputText>
+				    
+				        
+				       
+			           	 <b:inputText class="form-control" label="Production annuelle" name="productionAn" colMd="8" labelColMd="4"  placeholder="Production annuelle" mask="integer" value="#{parcelleMB.parcProductionAnnuelleMangue}"  >
+			           </b:inputText>
+			       
+		
+					
+            <b:selectOneMenu colMd="8" labelColMd="4" label="Commercialisation" class="form-control" id="comm" value="#{parcelleMB.parcCommercialisation}"  >
+                <f:selectItem itemLabel="Madan Sara" itemValue="Madan Sara" />
+                <f:selectItem itemLabel="Groupement" itemValue="Groupement" />
+                <f:selectItem itemLabel="Fournisseurs" itemValue="Fournisseurs" />
+                <f:selectItem itemLabel="Vente sur le marche" itemValue="Vente sur le marche" />
+            </b:selectOneMenu>
+            </b:panelGrid>
+           </b:well> </b:column>
+            <b:commandButton style="margin-left:-780px" class="submit-button" icon="save" value="Enregistrer" action="#{parcelleMB.ajouterparcelle2()}"   look="primary" >
+            <!--  <f:ajax execute="@form" listener="#{parcelleMB.addprod()}" ></f:ajax>
+             --> </b:commandButton>
+            </b:panel>
+              
+        </fieldset>
+        
+  <script src="../validation/jquery-3.2.1.min.js"></script>
+	<script src="../validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../resources/js/simpleform.min.js"></script>	
+	<script type="text/javascript" src="../validation/valid.js"/>
+        	
+        	<div class="clear"></div></b:formGroup>
+		</b:form>
+
+</section>
+
+	
+		
+</h:body>
+</ui:define></ui:composition>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+	<ui:composition template="/Views/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+	<h:head>
+	<title>
+Dashboard
+</title>
+	 <link rel="icon" type="image/png" href="../logo/logosys.png" />
+	</h:head>
+	
+
+	
+<h:body >
+        <b:form>
+        <b:container fluid="true">
+      
+            <b:row>
+                <b:column col-sm="3" col-md="2" styleClass="sidebar">
+                    <b:listLinks style="margin-left:-80px">
+                        <b:navLink header="Dasboard Links" />
+                      
+                        <b:dropMenu rendered="#{request.isUserInRole('ADMIN') || request.isUserInRole('SECRETAIRE')}" value="Rapports">
+                      <!--   <b:navLink  href="/systraInterface/faces/Views/rapportachat.xhtml" value="Achat" />
+                        <b:navLink  href="/systraInterface/faces/Views/rapportlot.xhtml" value="Lot" />
+                        <b:navLink  href="/systraInterface/faces/Views/rapportexpo.xhtml" value="Exportation" />
+                         --></b:dropMenu>
+                        
+                        
+                        <b:dropMenu  styleClass="submenu"  value="Localisation">
+                        <b:navLink href="/systraInterface/faces/Views/layerlatrine.xhtml" value="Latrine" />                       
+                        </b:dropMenu>
+                        
+                         <b:dropMenu  styleClass="submenu"  value="Adminstration" rendered="#{request.isUserInRole('ADMIN')}">
+                         <b:navLink icon-awesome="fa-user" rendered="#{request.isUserInRole('ADMIN')}" value="Nouveau Utilisateur" href="/systraInterface/faces/PageAdmin/User.xhtml"></b:navLink>
+                          <b:navLink rendered="#{request.isUserInRole('ADMIN')}" value="Panel Administration"  href="/systraInterface/faces/PageAdmin/admin.xhtml" ></b:navLink>
+                       
+                        </b:dropMenu>
+    
+                    </b:listLinks>
+                    <hr />
+
+                     
+
+
+
+                </b:column>
+                <b:column style="width:98%;padding-left:-150px;margin-top:-205px;" col-lg="12" offset-lg="1" col-md="10" offset="2" styleClass="main">
+                    
+                     <b:container>
+                     <ui:insert name="contentdashboard2" />
+                     
+                </b:container>
+                </b:column>
+            
+           
+            
+            </b:row>
+        </b:container> 
+       
+      </b:form>
+       
+      
+        
+        </h:body>
+</ui:define>
+</ui:composition>
